@@ -7,8 +7,9 @@ verify_ssl = true
 pylint = "*"
 
 [packages]
-django = "==2.2.0"
+django = "*"
 gunicorn = "==19.9.0"
 psycopg2-binary = "*"
 graphene-django = "*"
 youtube-dl = "*"
+graphene = "*"
