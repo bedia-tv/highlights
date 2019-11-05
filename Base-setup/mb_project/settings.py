@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 ]
 
 GRAPHENE = {
-    'SCHEMA': 'app.schema.schema'
+    'SCHEMA': 'posts.schema.schema'
 }
 
 MIDDLEWARE = [

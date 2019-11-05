@@ -1,8 +1,8 @@
 from django.views.generic import ListView
-from .models import Post
+from .models import Video, Highlights
 
 
 class HomePageView(ListView):
-    model = Post
+    model = Video
     template_name = 'home.html'
     context_object_name = 'all_posts_list'
