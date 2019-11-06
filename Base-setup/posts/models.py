@@ -15,17 +15,15 @@ class Video(models.Model):
         ordering = ('title',)
 
 class Highlights(models.Model):
-    url = models.URLField()
-    title = models.TextField()
     tags = models.TextField(blank=True)
-    thumbnail = models.TextField(blank=True)
     comments = models.TextField()
     startTime = models.IntegerField()
     endTime = models.IntegerField()
-    #videoID = models.ForeignKey(Video)
+    videoID = models.ForeignKey(Video)
 
     def __str__(self):
-        return self.title
+        return self.id
 
     class Meta:
-        ordering = ('title',)
+        ordering = ('id',)
+
