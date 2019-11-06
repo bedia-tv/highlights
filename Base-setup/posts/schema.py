@@ -23,7 +23,7 @@ class Query(ObjectType):
     Highlights = graphene.List(HighlightsType)
 
     def resolve_video(self, info, **kwargs):
-        
+
         id = kwargs.get('id')
 
         if id is not None:
