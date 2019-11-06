@@ -35,12 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'posts.apps.PostsConfig',
+    'highlights.apps.PostsConfig',
     'graphene_django',
 ]
 
 GRAPHENE = {
-    'SCHEMA': 'posts.schema.schema'
+    'SCHEMA': 'highlights.schema.schema'
 }
 
 MIDDLEWARE = [
