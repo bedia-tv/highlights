@@ -2,10 +2,10 @@ from django.db import models
 
 # Create your models here.
 class Video(models.Model):
-    #url = models.URLField()
+    url = models.URLField(blank=False)
     title = models.TextField()
-    #tags = models.TextField(blank=True)
-    #thumbnail = models.TextField(blank=True)
+    tags = models.TextField(blank=True)
+    thumbnail = models.TextField(blank=True)
     #comments = models.TextField()
 
     def __str__(self):

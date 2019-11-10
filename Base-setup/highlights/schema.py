@@ -1,17 +1,18 @@
 import graphene
 from graphene_django.types import DjangoObjectType, ObjectType
 from .models import Video, Highlights
+from .scraper import Extractor
 
+a = Extractor("https://www.youtube.com/watch?v=Xh-BgZuOngI")
 # TODO: Use all of the fields
 # TODO:
-"""
 
 class HighlightsType(DjangoObjectType):
     class Meta:
         model = Highlights
 
 
-
+'''
 # Create a Query type
 class Query(ObjectType):
     video = graphene.Field(VideoType, id=graphene.String())
@@ -19,7 +20,7 @@ class Query(ObjectType):
     videos = graphene.List(VideoType)
     Highlights = graphene.List(HighlightsType)
 
-    def resolve_video(self, info, **kwargs):
+    def resolve_video(self, info, **kwargs)
 
         id = kwargs.get('id')
 
@@ -36,7 +37,7 @@ class Query(ObjectType):
 
         return None
 
-    def resolve_videos(self, info, **kwargs):
+    def resolve_videos(self, info, **kwargs): url in kwargs
         return Video.objects.all()
 
     def resolve_hilights(self, info, **kwargs):
@@ -106,7 +107,7 @@ class UpdateVideo(graphene.Mutation):
             return UpdateVideo(ok=ok, video=video_instance)
         return UpdateVideo(ok=ok, video=None)
 
-'''
+
 # Create mutations for movies
 class CreateHilights(graphene.Mutation):
     class Arguments:
@@ -158,16 +159,7 @@ class UpdateHighLights(graphene.Mutation):
             return UpdateHighLights(ok=ok, highlights=highlights_instance)
         return UpdateHighLights(ok=ok, highlights=None)
 
-
-
-class Mutation(graphene.ObjectType):
-    create_video = CreateVideo.Field()
-   # update_video = UpdateVideo.Field()
-    #create_highlights = CreateHilights.Field()
-    #update_highlights = UpdateHighLights.Field()
-"""
-
-
+'''
 class VideoType(DjangoObjectType):
     class Meta:
         model = Video
@@ -182,88 +174,33 @@ class videoInput(graphene.InputObjectType):
     comments = graphene.String()
 
 
-'''
-class Query(graphene.ObjectType):
-    questions = graphene.List(VideoType)
-
-    author_search = graphene.List(VideoType)
-
-    def resolve_author_search(self, info, **kwargs):
-        url = kwargs.get("title", "test")
-        return Video.objects.filter(title__icontains=url)
-        
-'''
-
-
 class Query(ObjectType):
-    video = graphene.Field(VideoType, title=graphene.String())
+    video = graphene.Field(VideoType, url=graphene.String())
     # Highlight = graphene.Field(HighlightsType, id=graphene.Int())
-    videos = graphene.List(VideoType, title=graphene.String())
+    #videos = graphene.List(VideoType, title=graphene.String())
 
     # Highlights = graphene.List(HighlightsType)
 
     def resolve_video(self, info, **kwargs):
-        title = kwargs.get("title")
+        url = kwargs.get("url")
 
-        if title is not None:
-            return Video.objects.get(title=title)
+        if url is not None:
+            raw_data = Extractor(url)
+            title = raw_data['Title']
+            URL = kwargs.get('url')
+            tags = raw_data['Tags']
+            thumbnail = raw_data['Thumbnail']
+            if tags is not None:
+                p, created = Video.objects.get_or_create(title=title,url=URL,tags=tags,thumbnail=thumbnail)
+                return p
+            p, created = Video.objects.get_or_create(title=title, url=URL, thumbnail=thumbnail)
+            return p
 
         return None
 
-    def resolve_videos(self, info, **kwargs):
-        title = kwargs.get("title", "")
-        id = 1
-        return Video.objects.filter(title__icontains="qhy")
 
 
-class UpdateVideo(graphene.Mutation):
-    class Arguments:
-        id = graphene.Int(required=True)
-        input = videoInput(required=True)
 
-    ok = graphene.Boolean()
-    video = graphene.Field(VideoType)
+schema = graphene.Schema(query=Query)
 
-    @staticmethod
-    def mutate(root, info, id, input=None):
-        ok = False
-        video_instance = Video.objects.get(pk=id)
-        if video_instance:
-            ok = True
-            video_instance.title = input.title
-            video_instance.url = input.url
-            video_instance.tags = input.tags
-            video_instance.thumbnail = input.thumbnail
-            video_instance.comments = input.comments
-            video_instance.save()
-            return UpdateVideo(ok=ok, video=video_instance)
-        return UpdateVideo(ok=ok, video=None)
-
-
-class CreateVideoMutation(graphene.Mutation):
-    class Arguments:
-        # The input arguments for this mutation
-        input = videoInput(required=True)
-        # id = graphene.ID()
-
-    # The class attributes define the response of the mutation
-    video = graphene.Field(VideoType)
-
-    @staticmethod
-    def mutate(self, info, input=None):
-        video_instance = Video(title=input.title)
-        video_instance.save()
-        # Notice we return an instance of this mutation
-        return CreateVideoMutation(video=video_instance)
-
-
-class Mutation(graphene.ObjectType):
-    create_video = CreateVideoMutation.Field()
-
-
-# update_video = UpdateVideo.Field()
-# create_highlights = CreateHilights.Field()
-# update_highlights = UpdateHighLights.Field()
-
-
-schema = graphene.Schema(query=Query, mutation=Mutation)
+#schema = graphene.Schema(query=Query, mutation=Mutation)
