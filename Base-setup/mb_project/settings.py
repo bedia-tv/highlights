@@ -48,7 +48,7 @@ DEBUG = False
 
 # ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
-                 '127.0.0.1', 'peaceful-earth-49871.herokuapp.com']
+                 '127.0.0.1', 'warm-taiga-12809.herokuapp.com']
 
 
 # Application definition
