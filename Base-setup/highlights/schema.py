@@ -1,6 +1,6 @@
 import graphene
 from graphene_django.types import DjangoObjectType, ObjectType
-from .models import Video, Highlights
+from highlights.models import Video, Highlights
 
 # TODO: Use all of the fields
 # TODO:
@@ -18,7 +18,7 @@ class Query(ObjectType):
     Highlight = graphene.Field(HighlightsType, id=graphene.Int())
     videos = graphene.List(VideoType)
     Highlights = graphene.List(HighlightsType)
-
+1tttt
     def resolve_video(self, info, **kwargs):
 
         id = kwargs.get('id')
