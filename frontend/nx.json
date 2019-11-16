@@ -13,6 +13,9 @@
     },
     "chrome-extension-e2e": {
       "tags": []
+    },
+    "components": {
+      "tags": []
     }
   }
 }
