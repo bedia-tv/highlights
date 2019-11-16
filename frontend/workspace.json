@@ -1,0 +1,168 @@
+{
+  "version": 1,
+  "projects": {
+    "chrome-extension": {
+      "root": "apps/chrome-extension",
+      "sourceRoot": "apps/chrome-extension/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/apps/chrome-extension",
+            "index": "apps/chrome-extension/src/index.html",
+            "main": "apps/chrome-extension/src/main.tsx",
+            "polyfills": "apps/chrome-extension/src/polyfills.ts",
+            "tsConfig": "apps/chrome-extension/tsconfig.app.json",
+            "assets": [
+              "apps/chrome-extension/src/favicon.ico",
+              "apps/chrome-extension/src/assets"
+            ],
+            "styles": [],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/babel"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/chrome-extension/src/environments/environment.ts",
+                  "with": "apps/chrome-extension/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "chrome-extension:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "chrome-extension:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/chrome-extension/.eslintrc",
+            "tsConfig": [
+              "apps/chrome-extension/tsconfig.app.json",
+              "apps/chrome-extension/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/chrome-extension/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/chrome-extension/jest.config.js",
+            "tsConfig": "apps/chrome-extension/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "chrome-extension-e2e": {
+      "root": "apps/chrome-extension-e2e",
+      "sourceRoot": "apps/chrome-extension-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/chrome-extension-e2e/cypress.json",
+            "tsConfig": "apps/chrome-extension-e2e/tsconfig.e2e.json",
+            "devServerTarget": "chrome-extension:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "chrome-extension:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/chrome-extension-e2e/.eslintrc",
+            "tsConfig": ["apps/chrome-extension-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/chrome-extension-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/react": {
+      "application": {
+        "style": "styled-components",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "styled-components"
+      },
+      "library": {
+        "style": "styled-components",
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/web": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "chrome-extension"
+}
