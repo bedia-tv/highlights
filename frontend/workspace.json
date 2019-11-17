@@ -15,12 +15,16 @@
             "main": "apps/chrome-extension/src/main.tsx",
             "polyfills": "apps/chrome-extension/src/polyfills.ts",
             "tsConfig": "apps/chrome-extension/tsconfig.app.json",
+            "content": "apps/chrome-extension/src/content.ts",
             "assets": [
               "apps/chrome-extension/src/favicon.ico",
-              "apps/chrome-extension/src/assets"
+              "apps/chrome-extension/src/assets",
+              "apps/chrome-extension/src/manifest.json",
+              "apps/chrome-extension/src/scripts"
             ],
             "styles": [],
-            "scripts": [],
+            "scripts": [
+            ],
             "webpackConfig": "@nrwl/react/plugins/babel"
           },
           "configurations": {
@@ -68,7 +72,10 @@
               "apps/chrome-extension/tsconfig.app.json",
               "apps/chrome-extension/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/chrome-extension/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/chrome-extension/**"
+            ]
           }
         },
         "test": {
@@ -103,8 +110,13 @@
           "options": {
             "linter": "eslint",
             "config": "apps/chrome-extension-e2e/.eslintrc",
-            "tsConfig": ["apps/chrome-extension-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/chrome-extension-e2e/**"]
+            "tsConfig": [
+              "apps/chrome-extension-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/chrome-extension-e2e/**"
+            ]
           }
         }
       }
@@ -124,7 +136,10 @@
               "libs/components/tsconfig.lib.json",
               "libs/components/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/components/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/components/**"
+            ]
           }
         },
         "test": {

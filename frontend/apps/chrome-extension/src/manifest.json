@@ -1,0 +1,12 @@
+{
+  "short_name": "Highlight Extension",
+  "name": "Highlight Chrome Extension",
+  "manifest_version": 2,
+  "start_url": "./index.html",
+  "version": "1.0",
+  "content_security_policy": "script-src 'self' 'SHA25612345'; object-src 'self'",
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "permissions": ["activeTab", "contextMenus", "storage", "tabs"]
+}
