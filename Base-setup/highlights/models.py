@@ -7,6 +7,7 @@ from django.template.defaultfilters import slugify
 # https://stackoverflow.com/questions/12270852/convert-uuid-32-character-hex-string-into-a-youtube-style-short-id-and-back
 import uuid
 import base64
+#import taggit.managers
 from taggit.managers import TaggableManager
 
 
