@@ -11,18 +11,24 @@ class HighlightAdmin(admin.ModelAdmin):
     search_fields = ['highlight_script']
     ordering = ['videoID']
 
+class VideoAdmin(ImportExportModelAdmin):
+    list_display = ('title', 'slugURL', 'typemedia',
+                    #'video_producer'
+                     'video_date')
+    #filter_horizontal = ('video_speakers',)
+    #list_filter = ('video_producer',)
+    search_fields = ['title', ]
+
+admin.site.register(Video, VideoAdmin)
+admin.site.register(Highlights, HighlightAdmin)
+'''
 
 class SpeakerAdmin(ImportExportModelAdmin):
     list_display = ('speaker_name', 'id', 'speaker_image')
     search_fields = ['speaker_name']
 
 
-class VideoAdmin(ImportExportModelAdmin):
-    list_display = ('title', 'slugURL', 'typemedia',
-                    'video_producer', 'video_date')
-    filter_horizontal = ('video_speakers',)
-    list_filter = ('video_producer',)
-    search_fields = ['title', ]
+
 
 
 class ProducerAdmin(ImportExportModelAdmin):
@@ -32,5 +38,5 @@ class ProducerAdmin(ImportExportModelAdmin):
 
 admin.site.register(Producer, ProducerAdmin)
 admin.site.register(Speaker, SpeakerAdmin)
-admin.site.register(Video, VideoAdmin)
-admin.site.register(Highlights, HighlightAdmin)
+
+'''

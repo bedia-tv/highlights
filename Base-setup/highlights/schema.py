@@ -9,10 +9,12 @@ from .models import Video, Highlights
 from graphene_django.converter import convert_django_field
 from taggit.managers import TaggableManager
 
+
 # convert TaggableManager to string representation
 @convert_django_field.register(TaggableManager)
 def convert_field_to_string(field, registry=None):
     return String(description=field.help_text, required=not field.null)
+
 
 class VideoType(DjangoObjectType):
     class Meta:
@@ -33,23 +35,24 @@ class Query(ObjectType):
 
     def resolve_video(self, info, **kwargs):
         url = kwargs.get("url")
+        entry = Video.objects.filter(url=url)
 
-        if url is not None:
+        if entry is None:
             raw_data = Extractor(url)
             title = raw_data['Title']
             URL = kwargs.get('url')
             tags = raw_data['Tags']
             thumbnail = raw_data['Thumbnail']
             if tags is not None:
-                p, created = Video.objects.get_or_create(
-                    title=title, url=URL, tags=tags, thumbnail=thumbnail)
+                p, created = Video(
+                    title=title, url=URL, tags=tags, thumbnail=thumbnail, exists=False)
                 return p
-            p, created = Video.objects.get_or_create(
-                title=title, url=URL, thumbnail=thumbnail)
+            p, created = Video(
+                title=title, url=URL, thumbnail=thumbnail, exists=False)
             return p
 
-        return None
-
+        Video.objects.filter(url=url).update(exists=True)
+        return entry
 
     def resolve_highlight(self, info, **kwargs):
         id = kwargs.get('id')
@@ -95,7 +98,7 @@ class CreateVideo(graphene.Mutation):
         video_instance = Video(
             url=input.url,
             title=input.title,
-            thumbnail=input.thumbnail
+            # thumbnail=input.thumbnail
         )
         video_instance.save()
         return CreateVideo(ok=ok, video=video_instance)

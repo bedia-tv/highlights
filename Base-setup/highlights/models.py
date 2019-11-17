@@ -59,14 +59,15 @@ class Video(models.Model):
     url = models.URLField()
     tags = TaggableManager(blank=True)
     video_description = models.TextField()
-    video_producer = models.ForeignKey(
-        Producer, related_name='Video_Producer', default='0fbd2ae21f', blank=True, null=True, on_delete=models.SET_NULL)
-    thumbnail = models.URLField()
+    #video_producer = models.ForeignKey(
+        #Producer, related_name='Video_Producer', default='0fbd2ae21f', blank=True, null=True, on_delete=models.SET_NULL)
+    #thumbnail = models.URLField(blank=True)
     video_date = models.DateField(
         default=today_utc, blank=True, null=True)
-    video_speakers = models.ManyToManyField(
-        Speaker, null=True, blank=True, default="b781ef92-670c-4e74-b584-49fec58e9989")
+    #video_speakers = models.ManyToManyField(
+        #Speaker, null=True, blank=True, default="b781ef92-670c-4e74-b584-49fec58e9989")
     comments = models.TextField()
+    exists = models.BooleanField()
 
     class Meta:
         ordering = ['-video_date']
@@ -87,8 +88,8 @@ class Highlights(models.Model):
     endTime = models.FloatField(default=0.0)
     videoID = models.ForeignKey(
         Video, related_name='Highlight_Video', blank=True, null=True, on_delete=models.SET_NULL)
-    highlight_speakers = models.ManyToManyField(
-        Speaker, null=True, blank=True, default="b781ef92-670c-4e74-b584-49fec58e9989")
+    #highlight_speakers = models.ManyToManyField(
+        #Speaker, null=True, blank=True, default="b781ef92-670c-4e74-b584-49fec58e9989")
 
     @property
     def get_tags(self):
