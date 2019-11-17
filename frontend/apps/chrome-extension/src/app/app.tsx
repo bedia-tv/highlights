@@ -1,12 +1,11 @@
 import React from 'react';
 import {Container} from './app.style';
+import { SubmissionPage } from './features/submission';
 
 const App = () => {
   return (
     <Container>
-      <h1>
-        Hello world
-      </h1>
+      <SubmissionPage/>
     </Container>
   )
 };

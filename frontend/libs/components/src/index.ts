@@ -1,2 +1,3 @@
 export * from './lib/form';
-export * from './lib/components';
+export * from './lib/graphql';
+
