@@ -61,13 +61,13 @@ class Video(models.Model):
     video_description = models.TextField()
     #video_producer = models.ForeignKey(
         #Producer, related_name='Video_Producer', default='0fbd2ae21f', blank=True, null=True, on_delete=models.SET_NULL)
-    #thumbnail = models.URLField(blank=True)
+    thumbnail = models.URLField(blank=True)
     video_date = models.DateField(
         default=today_utc, blank=True, null=True)
     #video_speakers = models.ManyToManyField(
         #Speaker, null=True, blank=True, default="b781ef92-670c-4e74-b584-49fec58e9989")
     comments = models.TextField()
-
+    exists = models.BooleanField(default=False)
     class Meta:
         ordering = ['-video_date']
 
