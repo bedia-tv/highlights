@@ -44,10 +44,10 @@ class Query(ObjectType):
             tags = raw_data['Tags']
             thumbnail = raw_data['Thumbnail']
             if tags is not None:
-                p, created = Video(
+                p = Video(
                     title=title, url=URL, tags=tags, thumbnail=thumbnail, exists=False)
                 return p
-            p, created = Video(
+            p = Video(
                 title=title, url=URL, thumbnail=thumbnail, exists=False)
             return p
 

@@ -67,7 +67,6 @@ class Video(models.Model):
     #video_speakers = models.ManyToManyField(
         #Speaker, null=True, blank=True, default="b781ef92-670c-4e74-b584-49fec58e9989")
     comments = models.TextField()
-    exists = models.BooleanField()
 
     class Meta:
         ordering = ['-video_date']
