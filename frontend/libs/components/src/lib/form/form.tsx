@@ -54,7 +54,7 @@ export const Form = ({ url }) => {
     //     }
     // })
   };
-  if (data) return <p>Submitted!</p>;
+  //if (data) return <p>Submitted!</p>;
   if (loading) return <p>loading...</p>;
   if (error) return <p>Error...</p>;
   return (
