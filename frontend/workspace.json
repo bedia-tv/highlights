@@ -155,7 +155,8 @@
             "tsConfig": "apps/pwa-extension/tsconfig.app.json",
             "assets": [
               "apps/pwa-extension/src/favicon.ico",
-              "apps/pwa-extension/src/assets"
+              "apps/pwa-extension/src/assets",
+              "apps/pwa-extension/src/manifest.json"
             ],
             "styles": [],
             "scripts": [],
