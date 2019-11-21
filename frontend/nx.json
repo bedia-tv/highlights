@@ -16,6 +16,12 @@
     },
     "components": {
       "tags": []
+    },
+    "pwa-extension": {
+      "tags": []
+    },
+    "pwa-extension-e2e": {
+      "tags": []
     }
   }
 }
