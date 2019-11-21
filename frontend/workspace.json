@@ -156,7 +156,8 @@
             "assets": [
               "apps/pwa-extension/src/favicon.ico",
               "apps/pwa-extension/src/assets",
-              "apps/pwa-extension/src/manifest.json"
+              "apps/pwa-extension/src/manifest.json",
+              "apps/pwa-extension/src/service-worker.js"
             ],
             "styles": [],
             "scripts": [],
