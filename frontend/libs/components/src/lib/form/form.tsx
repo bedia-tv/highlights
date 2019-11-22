@@ -83,7 +83,8 @@ export const Form = ({ url }) => {
           controls={true}
           width='100%'
           height='100%'
-
+          startTime={60}
+          endTime={65}
         /> 
       </FieldBox>
       <FieldBox>

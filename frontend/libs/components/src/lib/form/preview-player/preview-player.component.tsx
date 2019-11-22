@@ -4,8 +4,8 @@ import ReactPlayer from "react-player";
 interface IProps {
   url: string;
   //time in second
-  startTime?: number;
-  endTime?: number;
+  startTime: number;
+  endTime: number;
   controls: boolean;
   width?: string;
   height?: string;
@@ -31,10 +31,19 @@ const PreviewPlayer = (props: IProps) => {
             setPlaying(true);
         }
     }
+    const handleReady = () => {
+      if(playerRef.current) {
+        let player: ReactPlayer = playerRef.current;
+        player.seekTo(props.startTime, 'seconds');
+        setPlaying(true);
+      }
+    }
 
     const handleProgress = (played: IProgress) => {
       console.log(played.playedSeconds);
-
+      if(played.playedSeconds >= props.endTime){
+        playerRef.current.seekTo(props.startTime);
+      }
     }
 
 
@@ -44,6 +53,7 @@ const PreviewPlayer = (props: IProps) => {
       <ReactPlayer
         {...props}
         playing={playing}
+        onReady={handleReady}
         ref={playerRef}
         onProgress={handleProgress}
       />
