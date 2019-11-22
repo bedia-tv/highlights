@@ -10,6 +10,7 @@ import {
   ThumbnailsBox,
   ImageBox
 } from './form.style';
+import PreviewPlayer from './preview-player/preview-player.component';
 
 import useForm from 'react-hook-form';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -56,18 +57,18 @@ export const Form = ({ url }) => {
   };
   //if (data) return <p>Submitted!</p>;
   if (loading) return <p>loading...</p>;
-  if (error) return <p>Error...</p>;
+  // if (error) return <p>Error...</p>;
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
       <FieldBox>
         <Label>Title</Label>
-        <Input value={data.getVideo.title} name="url" type="text"/>
+        <Input value="Title" name="url" type="text"/>
       </FieldBox>
       <FieldBox>
         <Label>Thumbnail</Label>
         <ThumbnailsBox>
           <ImageBox>
-            <img src={data.getVideo.thumbnail} alt="cat"/>
+            {/* <img src={data.getVideo.thumbnail} alt="cat"/> */}
           </ImageBox>
         </ThumbnailsBox>
       </FieldBox>
@@ -77,13 +78,17 @@ export const Form = ({ url }) => {
       </FieldBox>
       <FieldBox>
         <Label>Preview</Label>
-        <VideoPreviewBox>
-          Preview
-        </VideoPreviewBox>
+        <PreviewPlayer
+          url={url}
+          controls={true}
+          width='100%'
+          height='100%'
+
+        /> 
       </FieldBox>
       <FieldBox>
         <Label>Tags</Label>
-        <Input name="tags" value={data.getVideo.tags} type="text"/>
+        {/* <Input name="tags" value={data.getVideo.tags} type="text"/> */}
       </FieldBox>
       <ButtonContainer>
         <Button primary>Submit</Button>
