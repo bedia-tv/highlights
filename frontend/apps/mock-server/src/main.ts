@@ -1,18 +1,26 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- **/
 
-import * as express from 'express';
+import "reflect-metadata";
+import { createConnection } from "typeorm";
+import * as express from "express";
+import { ApolloServer } from "apollo-server-express";
+import { buildSchema } from "type-graphql";
+import { VideoResolver } from "./resolvers/VideoResolver";
 
-const app = express();
+(async () => {
+  const app = express();
 
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to mock-server!' });
-});
+  await createConnection();
 
-const port = process.env.port || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
-});
-server.on('error', console.error);
+  const apolloServer = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [VideoResolver]
+    }),
+    context: ({ req, res }) => ({ req, res })
+  });
+
+  apolloServer.applyMiddleware({ app, cors: false });
+
+  app.listen(4000, () => {
+    console.log("express server started");
+  });
+})();
