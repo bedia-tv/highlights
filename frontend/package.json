@@ -41,9 +41,7 @@
     "react-hook-form": "^3.28.1",
     "reflect-metadata": "^0.1.10",
     "sqlite3": "^4.1.0",
-    "styled-components": "4.4.0",
-    "type-graphql": "^0.17.5",
-    "typeorm": "0.2.20"
+    "styled-components": "4.4.0"
   },
   "devDependencies": {
     "@babel/preset-react": "7.0.0",

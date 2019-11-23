@@ -1,26 +1,58 @@
+import * as express from 'express';
+import { ApolloServer, gql } from 'apollo-server-express';
 
-import "reflect-metadata";
-import { createConnection } from "typeorm";
-import * as express from "express";
-import { ApolloServer } from "apollo-server-express";
-import { buildSchema } from "type-graphql";
-import { VideoResolver } from "./resolvers/VideoResolver";
+let videos = [
+	{
+		url: 'abc',
+		title: 'video 1'
+	}
+];
+
+let typeDefs = gql`
+	type Video {
+		url: String
+		title: String
+	}
+
+	type Query {
+		getVideo(url: String): Video
+	}
+
+	type Mutation {
+		submitVideo(url: String, title: String): Video
+	}
+`;
+
+let resolvers = {
+	Query: {
+		getVideo: (_, { url }) => videos.find((video) => url === video.url)
+	},
+
+	Mutation: {
+		submitVideo: (_, { url, title }) => {
+			let index = videos.findIndex((vid) => vid.url === url);
+			if (index != -1) {
+        videos[index].title = title;
+        return videos[index];
+			} else {
+        const video = { url, title };
+				videos.push(video);
+			}
+		}
+	}
+};
 
 (async () => {
-  const app = express();
+	const app = express();
 
-  await createConnection();
+	const apolloServer = new ApolloServer({
+		typeDefs,
+		resolvers
+	});
 
-  const apolloServer = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [VideoResolver]
-    }),
-    context: ({ req, res }) => ({ req, res })
-  });
+	apolloServer.applyMiddleware({ app, cors: false });
 
-  apolloServer.applyMiddleware({ app, cors: false });
-
-  app.listen(4000, () => {
-    console.log("express server started");
-  });
+	app.listen(5000, () => {
+		console.log('express server started');
+	});
 })();
