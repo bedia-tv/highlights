@@ -16,6 +16,12 @@
     },
     "components": {
       "tags": []
+    },
+    "apps-mock-server": {
+      "tags": []
+    },
+    "mock-server": {
+      "tags": []
     }
   }
 }

@@ -23,8 +23,7 @@
               "apps/chrome-extension/src/scripts"
             ],
             "styles": [],
-            "scripts": [
-            ],
+            "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/babel"
           },
           "configurations": {
@@ -72,10 +71,7 @@
               "apps/chrome-extension/tsconfig.app.json",
               "apps/chrome-extension/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/chrome-extension/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/chrome-extension/**"]
           }
         },
         "test": {
@@ -110,13 +106,8 @@
           "options": {
             "linter": "eslint",
             "config": "apps/chrome-extension-e2e/.eslintrc",
-            "tsConfig": [
-              "apps/chrome-extension-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/chrome-extension-e2e/**"
-            ]
+            "tsConfig": ["apps/chrome-extension-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/chrome-extension-e2e/**"]
           }
         }
       }
@@ -136,10 +127,7 @@
               "libs/components/tsconfig.lib.json",
               "libs/components/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/components/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/components/**"]
           }
         },
         "test": {
@@ -147,6 +135,118 @@
           "options": {
             "jestConfig": "libs/components/jest.config.js",
             "tsConfig": "libs/components/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "apps-mock-server": {
+      "root": "apps/apps/mock-server",
+      "sourceRoot": "apps/apps/mock-server/src",
+      "projectType": "application",
+      "prefix": "apps-mock-server",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/apps/mock-server",
+            "main": "apps/apps/mock-server/src/main.ts",
+            "tsConfig": "apps/apps/mock-server/tsconfig.app.json",
+            "assets": ["apps/apps/mock-server/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/apps/mock-server/src/environments/environment.ts",
+                  "with": "apps/apps/mock-server/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "apps-mock-server:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/apps/mock-server/.eslintrc",
+            "tsConfig": [
+              "apps/apps/mock-server/tsconfig.app.json",
+              "apps/apps/mock-server/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/apps/mock-server/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/apps/mock-server/jest.config.js",
+            "tsConfig": "apps/apps/mock-server/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "mock-server": {
+      "root": "apps/mock-server",
+      "sourceRoot": "apps/mock-server/src",
+      "projectType": "application",
+      "prefix": "mock-server",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/mock-server",
+            "main": "apps/mock-server/src/main.ts",
+            "tsConfig": "apps/mock-server/tsconfig.app.json",
+            "assets": ["apps/mock-server/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/mock-server/src/environments/environment.ts",
+                  "with": "apps/mock-server/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "mock-server:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/mock-server/.eslintrc",
+            "tsConfig": [
+              "apps/mock-server/tsconfig.app.json",
+              "apps/mock-server/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/mock-server/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/mock-server/jest.config.js",
+            "tsConfig": "apps/mock-server/tsconfig.spec.json"
           }
         }
       }
