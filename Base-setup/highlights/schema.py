@@ -198,6 +198,5 @@ class Mutation(graphene.ObjectType):
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
 
-highlight.comments = input.newcomments
 
 #check url, start time and end time
