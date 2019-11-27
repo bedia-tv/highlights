@@ -1,0 +1,14 @@
+1) cd Base-setup
+2) pipenv install
+3) pipenv shell
+
+4) docker-compose build
+5) docker-compose up db in one window
+
+6) copy 1 to 3 in another window
+7) in new window python manage.py runserver
+
+IF "port 5432 already allocated"
+	sudo lsof -i :5432
+	sudo kill -9 (id of value above)
+	sudo lsof -i :5432
