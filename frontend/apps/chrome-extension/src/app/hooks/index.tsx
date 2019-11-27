@@ -1,1 +1,1 @@
-export * from './useActiveTabLocation';
+export * from './use-active-tab-location';

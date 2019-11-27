@@ -20,7 +20,10 @@
     "apps-mock-server": {
       "tags": []
     },
-    "mock-server": {
+    "pwa-extension": {
+      "tags": []
+    },
+    "pwa-extension-e2e": {
       "tags": []
     }
   }
