@@ -18,7 +18,7 @@ import { FETCH_IF_VIDEO_EXIST_QUERY, SUBMIT_VIDEO_MUTATION } from '../graphql/vi
 
 interface IProps {
   url: string;
-  title: string;
+  title?: string;
 }
 
 interface VideoInformationData {
@@ -36,9 +36,9 @@ interface GetVideoVariables {
   url: string;
 }
 
-export const Form = ({ url }) => {
+export const Form: React.FC<IProps> = ({ url, title = null}) => {
   const { register, handleSubmit } = useForm<VideoInformationData>();
-  const [titleValue, setTitleValue] = useState('');
+  const [titleValue, setTitleValue] = useState(title || '');
 
   const { loading, data, error } = useQuery<GetVideoData, GetVideoVariables>(FETCH_IF_VIDEO_EXIST_QUERY, {
     variables: {
@@ -62,7 +62,7 @@ export const Form = ({ url }) => {
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
       <FieldBox>
         <Label>Title</Label>
-        <Input value="Title" name="url" type="text"/>
+        <Input value={titleValue} name="url" type="text"/>
       </FieldBox>
       <FieldBox>
         <Label>Thumbnail</Label>
@@ -85,7 +85,7 @@ export const Form = ({ url }) => {
           height='100%'
           startTime={60}
           endTime={65}
-        /> 
+        />
       </FieldBox>
       <FieldBox>
         <Label>Tags</Label>
