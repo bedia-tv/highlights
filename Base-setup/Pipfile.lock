@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ecb54bd5ab4f6d23430468215398a18393dcbf63238465f794a524fc2433a281"
+            "sha256": "bb6a7eabe86aa74f36521ebd85cbe1d9c1b9ae67c20c11548f731444c5ff4e2c"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -41,6 +41,14 @@
             ],
             "index": "pypi",
             "version": "==2.2.7"
+        },
+        "django-cors-headers": {
+            "hashes": [
+                "sha256:84933651fbbde8f2bc084bef2f077b79db1ec1389432f21dd661eaae6b3d6a95",
+                "sha256:a8b2772582e8025412f4d4b54b617d8b707076ffd53a2b961bd24f10ec207a7c"
+            ],
+            "index": "pypi",
+            "version": "==3.2.0"
         },
         "django-import-export": {
             "hashes": [
@@ -125,9 +133,9 @@
         },
         "openpyxl": {
             "hashes": [
-                "sha256:a3ee361d3ff04af6048d594775b3a54ffdf215d40fa5c6c78b2a41c0d0b020d3"
+                "sha256:eb68c08a72ac6d9812df181e88ebece3a68436364353eb6eda3bed863e3d73a6"
             ],
-            "version": "==3.0.1"
+            "version": "==3.0.2"
         },
         "promise": {
             "hashes": [
@@ -269,11 +277,11 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:1314de17f0d41c0f1062c4942406b8e0558d14d44b32f9fce00272760a06455b",
-                "sha256:25324aab78df9a09b2ee34f642f116933134bc66ea629a778c1fffe05b66f733"
+                "sha256:0575efd332cb9817f5a1fffd2a1e569e5a7d3642e7c24c7a5c47cbf70f301f25",
+                "sha256:bd785113687f201415389156664b9ebd81698fb6eb44c6d9fd35898619e27bf7"
             ],
             "index": "pypi",
-            "version": "==2019.11.5"
+            "version": "==2019.11.22"
         }
     },
     "develop": {

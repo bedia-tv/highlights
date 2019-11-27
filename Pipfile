@@ -8,6 +8,7 @@ django-taggit = "*"
 django-import-export = "*"
 graphene = "*"
 graphene-django = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 

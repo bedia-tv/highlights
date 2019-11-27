@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f05b7c4616a5730530d5e8102124f74b08104252ac167e1240a2532d5a82dcaa"
+            "sha256": "0c90eb47e7b29193b56ec783ebd58b2a26d53063771dba947c71b7db4ff36804"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -42,6 +42,14 @@
                 "sha256:89c2007ca4fa5b351a51a279eccff298520783b713bf28efb89dfb81c80ea49b"
             ],
             "version": "==2.2.7"
+        },
+        "django-cors-headers": {
+            "hashes": [
+                "sha256:84933651fbbde8f2bc084bef2f077b79db1ec1389432f21dd661eaae6b3d6a95",
+                "sha256:a8b2772582e8025412f4d4b54b617d8b707076ffd53a2b961bd24f10ec207a7c"
+            ],
+            "index": "pypi",
+            "version": "==3.2.0"
         },
         "django-import-export": {
             "hashes": [
@@ -118,9 +126,9 @@
         },
         "openpyxl": {
             "hashes": [
-                "sha256:a3ee361d3ff04af6048d594775b3a54ffdf215d40fa5c6c78b2a41c0d0b020d3"
+                "sha256:eb68c08a72ac6d9812df181e88ebece3a68436364353eb6eda3bed863e3d73a6"
             ],
-            "version": "==3.0.1"
+            "version": "==3.0.2"
         },
         "promise": {
             "hashes": [
