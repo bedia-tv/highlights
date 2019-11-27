@@ -37,6 +37,7 @@
     "react": "16.10.2",
     "react-dom": "16.10.2",
     "react-hook-form": "^3.28.1",
+    "react-player": "^1.14.2",
     "styled-components": "4.4.0",
     "react-router-dom": "5.1.2"
   },
