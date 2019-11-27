@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { Route, Link, Switch } from 'react-router-dom';
 import { Container } from './app.style';
+import SubmissionPage from './features/submission/submission.page';
 
 const App = () => {
   return (
@@ -19,9 +20,7 @@ const App = () => {
         </Container>
       </Route>
       <Route path="/share" exact>
-        <Container>
-          <h1>Share</h1>
-        </Container>
+        <SubmissionPage/>
       </Route>
     </Switch>
   );
