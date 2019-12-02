@@ -90,8 +90,8 @@ DATABASES = {
         'NAME': 'myproject',
         'USER': 'myprojectuser',
         'PASSWORD': 'password',
-        'HOST': 'localhost',  # set in docker-compose.yml
-        'PORT': 5432  # default postgres port
+        'HOST': os.getenv('DB_HOST'),  # set in docker-compose.yml
+        'PORT': os.getenv('DB_PORT')  # default postgres port
     }
 }
 

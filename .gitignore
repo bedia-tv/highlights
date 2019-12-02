@@ -305,3 +305,6 @@ Include
 # virtualenv folders #
 ######################
 env
+
+# Docker Compose Database Volumn
+db/
