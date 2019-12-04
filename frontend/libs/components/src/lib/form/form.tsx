@@ -62,7 +62,7 @@ export const Form: React.FC<IProps> = ({ url, title = null}) => {
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
       <FieldBox>
         <Label>Title</Label>
-        <Input value={titleValue} name="url" type="text"/>
+        <Input value={titleValue} name="url" type="text" readOnly/>
       </FieldBox>
       <FieldBox>
         <Label>Thumbnail</Label>
@@ -74,7 +74,7 @@ export const Form: React.FC<IProps> = ({ url, title = null}) => {
       </FieldBox>
       <FieldBox>
         <Label>Url</Label>
-        <Input name="url" type="text" value={url}/>
+        <Input name="url" type="text" value={url} readOnly/>
       </FieldBox>
       <FieldBox>
         <Label>Preview</Label>
