@@ -1,14 +1,14 @@
 import * as express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 
-let videos = [
+const videos = [
 	{
 		url: 'abc',
 		title: 'video 1'
 	}
 ];
 
-let typeDefs = gql`
+const typeDefs = gql`
 	type Video {
 		url: String
 		title: String
@@ -23,14 +23,14 @@ let typeDefs = gql`
 	}
 `;
 
-let resolvers = {
+const resolvers = {
 	Query: {
 		getVideo: (_, { url }) => videos.find((video) => url === video.url)
 	},
 
 	Mutation: {
 		submitVideo: (_, { url, title }) => {
-			let index = videos.findIndex((vid) => vid.url === url);
+			const index = videos.findIndex((vid) => vid.url === url);
 			if (index != -1) {
         videos[index].title = title;
         return videos[index];
@@ -52,7 +52,7 @@ let resolvers = {
 
 	apolloServer.applyMiddleware({ app, cors: false });
 
-	app.listen(5000, () => {
+	app.listen(8000, () => {
 		console.log('express server started');
 	});
 })();
