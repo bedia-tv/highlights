@@ -40,12 +40,11 @@ export const Form: React.FC<IProps> = ({ url, title = null}) => {
   const { register, handleSubmit } = useForm<VideoInformationData>();
   const [titleValue, setTitleValue] = useState(title || '');
 
-  const { loading, data, error } = useQuery<GetVideoData, GetVideoVariables>(FETCH_IF_VIDEO_EXIST_QUERY, {
+  const { loading, data, error } = useQuery(FETCH_IF_VIDEO_EXIST_QUERY, {
     variables: {
       url: url
     }
   });
-
 
   const onSubmit = async (values: VideoInformationData) => {
     // await submitForm({
@@ -55,49 +54,50 @@ export const Form: React.FC<IProps> = ({ url, title = null}) => {
     //     }
     // })
   };
-  //if (data) return <p>Submitted!</p>;
   if (loading) return <p>loading...</p>;
-  // if (error) return <p>Error...</p>;
-  return (
-    <FormContainer onSubmit={handleSubmit(onSubmit)}>
-      <FieldBox>
-        <Label>Title</Label>
-        <Input value={titleValue} name="url" type="text" readOnly/>
-      </FieldBox>
-      <FieldBox>
-        <Label>Thumbnail</Label>
-        <ThumbnailsBox>
-          <ImageBox>
-            {/* <img src={data.getVideo.thumbnail} alt="cat"/> */}
-          </ImageBox>
-        </ThumbnailsBox>
-      </FieldBox>
-      <FieldBox>
-        <Label>Url</Label>
-        <Input name="url" type="text" value={url} readOnly/>
-      </FieldBox>
-      <FieldBox>
-        <Label>Preview</Label>
-        <PreviewPlayer
-          url={url}
-          controls={true}
-          width='100%'
-          height='100%'
-          startTime={60}
-          endTime={65}
-        />
-      </FieldBox>
-      <FieldBox>
-        <Label>Tags</Label>
-        {/* <Input name="tags" value={data.getVideo.tags} type="text"/> */}
-      </FieldBox>
-      <ButtonContainer>
-        <Button primary>Submit</Button>
-        <Button>Cancel</Button>
-      </ButtonContainer>
-    </FormContainer>
-
-  );
+  if (error) return <p>Error...</p>;
+  if (data) {
+    return (
+      <FormContainer onSubmit={handleSubmit(onSubmit)}>
+        <FieldBox>
+          <Label>Title</Label>
+          <Input value={titleValue} name="url" type="text" readOnly/>
+        </FieldBox>
+        <FieldBox>
+          <Label>Thumbnail</Label>
+          <ThumbnailsBox>
+            <ImageBox>
+              <img src={data.getVideo.thumbnail} alt="cat"/>
+            </ImageBox>
+          </ThumbnailsBox>
+        </FieldBox>
+        <FieldBox>
+          <Label>Url</Label>
+          <Input name="url" type="text" value={url} readOnly/>
+        </FieldBox>
+        <FieldBox>
+          <Label>Preview</Label>
+          <PreviewPlayer
+            url={url}
+            controls={true}
+            width='100%'
+            height='100%'
+            startTime={60}
+            endTime={65}
+          />
+        </FieldBox>
+        <FieldBox>
+          <Label>Tags</Label>
+          <Input name="tags" value={data.getVideo.tags} type="text"/>
+        </FieldBox>
+        <ButtonContainer>
+          <Button primary>Submit</Button>
+          <Button>Cancel</Button>
+        </ButtonContainer>
+      </FormContainer>
+  
+    );
+  }
 };
 
 

@@ -305,3 +305,8 @@ Include
 # virtualenv folders #
 ######################
 env
+
+Base-setup/db/
+
+
+.idea/
