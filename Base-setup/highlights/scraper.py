@@ -6,7 +6,10 @@ import youtube_dl
 # requires url pulled from the user
 
 def Extractor(url):
-    ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s%(ext)s'})
+    ydl = youtube_dl.YoutubeDL({
+        'outtmpl': '%(id)s%(ext)s',
+        'nocheckcertificate': True
+    })
     video = {'URL': '', 'Title': '', 'Thumbnail':'','Tags':[]}
     with ydl:
         result = ydl.extract_info(

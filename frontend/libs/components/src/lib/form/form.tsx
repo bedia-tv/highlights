@@ -16,7 +16,7 @@ import useForm from 'react-hook-form';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { FETCH_IF_VIDEO_EXIST_QUERY, SUBMIT_VIDEO_MUTATION } from '../graphql/video';
 
-interface IProps {
+interface Props {
   url: string;
   title?: string;
 }
@@ -36,7 +36,8 @@ interface GetVideoVariables {
   url: string;
 }
 
-export const Form: React.FC<IProps> = ({ url, title = null}) => {
+export const Form: React.FC<Props> = ({ url, title = null}) => {
+  console.log(url);
   const { register, handleSubmit } = useForm<VideoInformationData>();
   const [titleValue, setTitleValue] = useState(title || '');
 
@@ -67,7 +68,7 @@ export const Form: React.FC<IProps> = ({ url, title = null}) => {
           <Label>Thumbnail</Label>
           <ThumbnailsBox>
             <ImageBox>
-              <img src={data.getVideo.thumbnail} alt="cat"/>
+              <img src={data.video.thumbnail} alt="cat"/>
             </ImageBox>
           </ThumbnailsBox>
         </FieldBox>
@@ -88,14 +89,14 @@ export const Form: React.FC<IProps> = ({ url, title = null}) => {
         </FieldBox>
         <FieldBox>
           <Label>Tags</Label>
-          <Input name="tags" value={data.getVideo.tags} type="text"/>
+          <Input name="tags" value={data.video.tags} type="text"/>
         </FieldBox>
         <ButtonContainer>
           <Button primary>Submit</Button>
           <Button>Cancel</Button>
         </ButtonContainer>
       </FormContainer>
-  
+
     );
   }
 };

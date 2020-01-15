@@ -9,34 +9,34 @@ const EXTENSION_OPENED = 'extension-opened';
 
 export const SubmissionPage = () => {
     const location = useActiveTabLocation();
-    const [title, setTitle] = useState<string>('');
-    const [videoInformation, setVideoInformation] = useState(null);
+    const MOCK_URL = 'https://www.youtube.com/watch?v=WnYLrhjzNhQ';
+    // const [title, setTitle] = useState<string>('');
+    // const [videoInformation, setVideoInformation] = useState(null);
 
-    useEffect(() => {
-        console.log("Extension Opened...");
-        chrome.runtime.sendMessage({
-            message: EXTENSION_OPENED
-        })
-    }, []);
+    // useEffect(() => {
+    //     console.log("Extension Opened...");
+    //     chrome.runtime.sendMessage({
+    //         message: EXTENSION_OPENED
+    //     })
+    // }, []);
 
 
-    useEffect(() => {
-        console.log('Listening for event...');
-        chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-            if (request.message === FETCHED_VIDEO_INFORMATION) {
-                const {title, currentTime} = request;
-                setVideoInformation({title, currentTime});
-            }
-        });
-        return () => {
-        }
-    });
-
+    // useEffect(() => {
+    //     console.log('Listening for event...');
+    //     chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    //         if (request.message === FETCHED_VIDEO_INFORMATION) {
+    //             const {title, currentTime} = request;
+    //             setVideoInformation({title, currentTime});
+    //         }
+    //     });
+    //     return () => {
+    //     }
+    // }, []);
 
     return (
         <Container>
             <h1>Video Submission</h1>
-            <Form url={location}/>
+            <Form url={MOCK_URL}/>
         </Container>
     )
 };
