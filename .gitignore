@@ -309,3 +309,4 @@ env
 
 # Docker Compose Database Volumn
 db/
+migrations/
