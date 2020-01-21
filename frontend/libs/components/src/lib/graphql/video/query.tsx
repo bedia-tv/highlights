@@ -1,11 +1,9 @@
 import gql from 'graphql-tag';
 
 export const FETCH_IF_VIDEO_EXIST_QUERY = gql`
-	query getVideo($url: String!) {
-		getVideo(url: $url) {
-			# videoID
+	query Video($url: String!) {
+		video(url: $url) {
 			title
-			url
 			thumbnail
 			tags
 		}

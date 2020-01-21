@@ -1,6 +1,7 @@
 ############# FRONTEND (NODE) #################
 
 .DS_Store
+.idea/
 
 # Logs
 logs
@@ -305,3 +306,6 @@ Include
 # virtualenv folders #
 ######################
 env
+
+# Docker Compose Database Volumn
+db/

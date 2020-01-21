@@ -17,7 +17,7 @@
     "components": {
       "tags": []
     },
-    "apps-mock-server": {
+    "mock-server": {
       "tags": []
     },
     "pwa-extension": {
