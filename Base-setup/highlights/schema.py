@@ -44,13 +44,21 @@ class Query(ObjectType):
             URL = kwargs.get('url')
             tags = raw_data['Tags']
             thumbnail = raw_data['Thumbnail']
-            if tags is not None:
-                p = Video(
-                    title=title, url=URL, tags=tags, thumbnail=thumbnail)
-                return p
+            
+
             p = Video(
-                title=title, url=URL, thumbnail=thumbnail)
+                title=title, url=URL, tags=tags, thumbnail=thumbnail)
+
+            video_instance = Video(
+                url=url,
+                title=title,
+                exists=True,
+                thumbnail=thumbnail)
+
+            video_instance.save()
+            
             return p
+            
 
         return entry[0]
 
