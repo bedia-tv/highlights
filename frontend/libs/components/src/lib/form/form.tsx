@@ -36,7 +36,6 @@ export const Form: React.FC<Props> = ({ url, title = null }) => {
   console.log(url);
   const { register, handleSubmit } = useForm<VideoInformationData>();
   const [titleValue, setTitleValue] = useState(title || '');
-  const [newTag, setNewTag] = useState();
   const [
     submitVideo,
     { data: submissionResult, error: submissionError, loading: submissionLoading }
@@ -49,7 +48,7 @@ export const Form: React.FC<Props> = ({ url, title = null }) => {
   });
 
   const onSubmit = async (values: VideoInformationData) => {
-    await submitVideo({
+    const result = await submitVideo({
       variables: {
         input: {
           url: values.url,
@@ -58,6 +57,7 @@ export const Form: React.FC<Props> = ({ url, title = null }) => {
         }
       }
     });
+    console.log(result);
   };
 
   if (loading || submissionLoading) return <p>loading...</p>;

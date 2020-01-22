@@ -1,10 +1,13 @@
-import {createHttpLink} from "apollo-link-http";
-import ApolloClient from "apollo-client";
-import { InMemoryCache} from 'apollo-cache-inmemory';
+import { createHttpLink } from 'apollo-link-http';
+import ApolloClient from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { from } from 'apollo-link';
 
-const host = process.env.HOST || 'http://localhost';
-const port = process.env.PORT || '8000';
+// const host = process.env.HOST || 'http://localhost';
+// const port = process.env.PORT || '8000';
+
+const host = 'http://localhost';
+const port = '8000';
 
 const uri = `${host}:${port}/graphql`;
 
@@ -16,7 +19,7 @@ function getCookie(name) {
     const cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+      if (cookie.substring(0, name.length + 1) === name + '=') {
         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
         break;
       }
@@ -27,15 +30,13 @@ function getCookie(name) {
 
 const httpLink = createHttpLink({
   uri,
-  credentials: 'include',
+  credentials: 'same-origin',
   headers: {
     'X-CSRFToken': getCookie('csrftoken')
   }
 });
 
 export const client = new ApolloClient({
-  link: from([
-    httpLink,
-  ]),
+  link: from([httpLink]),
   cache: new InMemoryCache()
 });
