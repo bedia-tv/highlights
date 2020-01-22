@@ -28,6 +28,7 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
     "@types/chrome": "^0.0.91",
+    "@xstate/react": "^0.8.1",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
     "apollo-link-http": "^1.5.16",
@@ -40,8 +41,9 @@
     "react-dom": "16.10.2",
     "react-hook-form": "^3.28.1",
     "react-player": "^1.14.2",
+    "react-router-dom": "5.1.2",
     "styled-components": "4.4.0",
-    "react-router-dom": "5.1.2"
+    "xstate": "^4.7.6"
   },
   "devDependencies": {
     "@babel/preset-react": "7.0.0",

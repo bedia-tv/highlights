@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-const FormContainer = styled.form`
+const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;

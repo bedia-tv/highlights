@@ -3,6 +3,7 @@ import {Container} from './app.style';
 import { SubmissionPage } from './features/submission';
 
 const App = () => {
+
   return (
     <Container>
       <SubmissionPage/>
