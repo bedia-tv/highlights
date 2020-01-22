@@ -6,7 +6,7 @@ services:
     volumes:
       - ./Base-setup/db:/var/lib/postgresql/data/
     ports:
-      - "5432:5432"
+      - "5431:5432"
     environment: 
       - POSTGRES_USER=myprojectuser
       - POSTGRES_PASSWORD=password
