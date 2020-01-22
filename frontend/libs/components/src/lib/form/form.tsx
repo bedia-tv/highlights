@@ -8,7 +8,8 @@ import {
   Button,
   ButtonContainer,
   ThumbnailsBox,
-  ImageBox
+  ImageBox,
+  VideoPreviewContainer
 } from './form.style';
 import {TagList} from './tags.component';
 import PreviewPlayer from './preview-player/preview-player.component';
@@ -99,7 +100,7 @@ export const Form: React.FC<Props> = ({ url, title = null }) => {
           <Label>Url</Label>
           <Input name="url" type="text" defaultValue={url} readOnly />
         </FieldBox>
-        <FieldBox>
+        <VideoPreviewContainer>
           <Label>Preview</Label>
           <PreviewPlayer
             url={url}
@@ -109,7 +110,7 @@ export const Form: React.FC<Props> = ({ url, title = null }) => {
             startTime={60}
             endTime={65}
           />
-        </FieldBox>
+        </VideoPreviewContainer>
         <FieldBox>
           <Label>Tags</Label>
           <TagList tags={tags}/>

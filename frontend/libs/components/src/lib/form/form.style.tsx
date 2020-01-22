@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 const FormContainer = styled.div`
   display: flex;
@@ -17,40 +17,42 @@ const ButtonContainer = styled.div`
 
 type ButtonProps = {
   primary?: boolean;
-}
+};
 
 const Button = styled.button`
-   font-weight: bold;
-   width: 100%;
-   height: 45px;
-   padding: 6px 15px;
-   border-radius: 5px;
-   outline: none;
-   background: white;
-   color: #09d3ac;
-   
-   ${(props: ButtonProps) => props.primary && css`
-    background: #09d3ac;
-    color: white;   
-  `};
-   
-   font-size: 14px;
-   border: none;
-   box-sizing: border-box;
+  font-weight: bold;
+  width: 100%;
+  height: 45px;
+  padding: 6px 15px;
+  border-radius: 5px;
+  outline: none;
+  background: white;
+  color: #09d3ac;
+
+  ${(props: ButtonProps) =>
+    props.primary &&
+    css`
+      background: #09d3ac;
+      color: white;
+    `};
+
+  font-size: 14px;
+  border: none;
+  box-sizing: border-box;
 `;
 
 const Input = styled.input`
-   font-weight: bold;
-   width: 100%;
-   height: 35px;
-   padding: 6px 15px;
-   border-radius: 5px;
-   outline: none;
-   border: none;
-   background: #F6F7F9;
-   color: #748194;
-   font-size: 14px;
-   box-sizing: border-box;
+  font-weight: bold;
+  width: 100%;
+  height: 35px;
+  padding: 6px 15px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  background: #f6f7f9;
+  color: #748194;
+  font-size: 14px;
+  box-sizing: border-box;
 `;
 
 const Label = styled.label`
@@ -81,19 +83,19 @@ const ThumbnailsBox = styled.div`
 `;
 
 const ImageBox = styled.div`
-   display: flex;
-   height: 100%;
-   flex-direction: row;
-   max-height: 10rem;
-   max-width: 100%;
-   box-sizing: border-box;
-   justify-content: center;
-   img {
-      border: 1px solid #ddd; /* Gray border */
-      border-radius: 4px;  /* Rounded border */
-      padding: 5px; /* Some padding */
-      max-width: 90%;
-   }
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+  max-height: 10rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+  img {
+    border: 1px solid #ddd; /* Gray border */
+    border-radius: 4px; /* Rounded border */
+    padding: 5px; /* Some padding */
+    max-width: 90%;
+  }
 `;
 
 const FieldBox = styled.div`
@@ -102,11 +104,20 @@ const FieldBox = styled.div`
   width: 100%;
 `;
 
+const VideoPreviewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 20rem;
+`;
+
 export {
+  VideoPreviewContainer,
   ThumbnailsBox,
   ImageBox,
   FormContainer,
-  Input, Label,
+  Input,
+  Label,
   FieldBox,
   VideoPreviewBox,
   Button,
