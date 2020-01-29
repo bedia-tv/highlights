@@ -1,7 +1,7 @@
 import React, {useState, useRef} from "react";
 import ReactPlayer from "react-player";
 
-interface IProps {
+interface Props {
   url: string;
   //time in second
   startTime: number;
@@ -18,7 +18,7 @@ interface Progress {
   loadedSeconds: number;
 }
 
-const PreviewPlayer = (props: IProps) => {
+const PreviewPlayer = (props: Props) => {
   const [playing, setPlaying] = useState<boolean>(false);
   const playerRef = useRef<ReactPlayer | null>(null);
 
@@ -26,11 +26,11 @@ const PreviewPlayer = (props: IProps) => {
     if (playerRef.current) {
       const player: ReactPlayer = playerRef.current;
       const currentDuration = player.getCurrentTime();
-      console.log(`Current Duration: ${currentDuration}`);
       player.seekTo(currentDuration + 10, 'seconds');
       setPlaying(true);
     }
   }
+
   const handleReady = () => {
     if (playerRef.current) {
       const player: ReactPlayer = playerRef.current;
@@ -40,7 +40,6 @@ const PreviewPlayer = (props: IProps) => {
   }
 
   const handleProgress = (played: Progress) => {
-    console.log(played.playedSeconds);
     if (played.playedSeconds >= props.endTime) {
       playerRef.current.seekTo(props.startTime);
     }
@@ -49,8 +48,11 @@ const PreviewPlayer = (props: IProps) => {
   return (
     <>
       <ReactPlayer
-        {...props}
-        playing={playing}
+        url={props.url}
+        controls={props.controls}
+        width={props.width}
+        height={props.height}
+        playing={false}
         onReady={handleReady}
         ref={playerRef}
         onProgress={handleProgress}

@@ -8,13 +8,18 @@ import {
   Button,
   ButtonContainer,
   ThumbnailsBox,
-  ImageBox
+  ImageBox,
+  VideoPreviewContainer
 } from './form.style';
+import {TagList} from './tags.component';
 import PreviewPlayer from './preview-player/preview-player.component';
 
 import useForm from 'react-hook-form';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { FETCH_IF_VIDEO_EXIST_QUERY, SUBMIT_VIDEO_MUTATION } from '../graphql/video';
+import {
+  FETCH_IF_VIDEO_EXIST_QUERY,
+  SUBMIT_VIDEO_MUTATION
+} from '../graphql/video';
 
 interface Props {
   url: string;
@@ -26,79 +31,112 @@ interface VideoInformationData {
   title: string;
   tags: string;
   thumbnail: string;
+  startTime: number;
+  stopTime: number;
 }
 
-interface GetVideoData {
-  getVideo: VideoInformationData;
-}
-
-interface GetVideoVariables {
-  url: string;
-}
-
-export const Form: React.FC<Props> = ({ url, title = null}) => {
+export const Form: React.FC<Props> = ({ url, title = null }) => {
   console.log(url);
   const { register, handleSubmit } = useForm<VideoInformationData>();
   const [titleValue, setTitleValue] = useState(title || '');
+  const [startTime, setStartTime] = useState(0);
+  const [stopTime, setStopTime] = useState(0);
 
-  const { loading, data, error } = useQuery(FETCH_IF_VIDEO_EXIST_QUERY, {
+  const [
+    submitVideo,
+    { data: submissionResult, error: submissionError, loading: submissionLoading }
+  ] = useMutation(SUBMIT_VIDEO_MUTATION);
+  
+  const { loading, data: videoQueryResult, error } = useQuery(FETCH_IF_VIDEO_EXIST_QUERY, {
     variables: {
       url: url
     }
   });
 
   const onSubmit = async (values: VideoInformationData) => {
-    // await submitForm({
-    //     variables: {
-    //         ...values,
-    //         ...(data || {})
-    //     }
-    // })
+    const result = await submitVideo({
+      variables: {
+        input: {
+          url: values.url,
+          tags: values.tags,
+          highlightName: values.title,
+          startTime: values.startTime,
+          stopTime: values.stopTime
+        }
+      }
+    });
+    console.log(result);
   };
-  if (loading) return <p>loading...</p>;
-  if (error) return <p>Error...</p>;
-  if (data) {
+
+  if (loading || submissionLoading) return <p>loading...</p>;
+  if (error || submissionError) return <p>Error...</p>;
+
+  if (submissionResult) {
     return (
-      <FormContainer onSubmit={handleSubmit(onSubmit)}>
+      <FormContainer>
+        <h1>
+          Submission Succeeded. 
+        </h1>  
+      </FormContainer>
+    );
+  } else if (videoQueryResult) {
+
+    const {video: {thumbnail, tags}} = videoQueryResult;
+    
+    return (
+      <FormContainer >
+        <form onSubmit={handleSubmit(onSubmit)}>
         <FieldBox>
           <Label>Title</Label>
-          <Input value={titleValue} name="url" type="text" readOnly/>
+          <Input
+            defaultValue={titleValue}
+            name="title"
+            type="text"
+            onChange={e => setTitleValue(e.target.value)}
+          />
         </FieldBox>
         <FieldBox>
           <Label>Thumbnail</Label>
           <ThumbnailsBox>
             <ImageBox>
-              <img src={data.video.thumbnail} alt="cat"/>
+              <img src={thumbnail} alt="thumnails" />
             </ImageBox>
           </ThumbnailsBox>
         </FieldBox>
         <FieldBox>
           <Label>Url</Label>
-          <Input name="url" type="text" value={url} readOnly/>
+          <Input name="url" type="text" defaultValue={url} readOnly />
         </FieldBox>
         <FieldBox>
+          <Label>Start time</Label>
+          <Input name="startTime" type="number" defaultValue={`${startTime}`} onChange={e => setStartTime(parseFloat(e.target.value))} />
+        </FieldBox>
+        <FieldBox>
+          <Label>End time</Label>
+          <Input name="stopTime" type="number" defaultValue={`${stopTime}`} onChange={e => setStopTime(parseFloat(e.target.value))} />
+        </FieldBox>
+        <VideoPreviewContainer>
           <Label>Preview</Label>
           <PreviewPlayer
             url={url}
             controls={true}
-            width='100%'
-            height='100%'
+            width="100%"
+            height="100%"
             startTime={60}
             endTime={65}
           />
-        </FieldBox>
+        </VideoPreviewContainer>
         <FieldBox>
           <Label>Tags</Label>
-          <Input name="tags" value={data.video.tags} type="text"/>
+          <TagList tags={tags}/>
+          {/* <Input name="tags" value={tags} type="text" readOnly /> */}
         </FieldBox>
         <ButtonContainer>
           <Button primary>Submit</Button>
           <Button>Cancel</Button>
         </ButtonContainer>
+        </form>
       </FormContainer>
-
     );
   }
 };
-
-

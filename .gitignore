@@ -1,5 +1,5 @@
 ############# FRONTEND (NODE) #################
-
+.vscode/
 .DS_Store
 .idea/
 
@@ -309,3 +309,4 @@ env
 
 # Docker Compose Database Volumn
 db/
+migrations/
