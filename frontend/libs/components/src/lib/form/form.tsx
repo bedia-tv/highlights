@@ -31,12 +31,17 @@ interface VideoInformationData {
   title: string;
   tags: string;
   thumbnail: string;
+  startTime: number;
+  stopTime: number;
 }
 
 export const Form: React.FC<Props> = ({ url, title = null }) => {
   console.log(url);
   const { register, handleSubmit } = useForm<VideoInformationData>();
   const [titleValue, setTitleValue] = useState(title || '');
+  const [startTime, setStartTime] = useState(0);
+  const [stopTime, setStopTime] = useState(0);
+
   const [
     submitVideo,
     { data: submissionResult, error: submissionError, loading: submissionLoading }
@@ -54,7 +59,9 @@ export const Form: React.FC<Props> = ({ url, title = null }) => {
         input: {
           url: values.url,
           tags: values.tags,
-          highlightName: values.title
+          highlightName: values.title,
+          startTime: values.startTime,
+          stopTime: values.stopTime
         }
       }
     });
@@ -99,6 +106,14 @@ export const Form: React.FC<Props> = ({ url, title = null }) => {
         <FieldBox>
           <Label>Url</Label>
           <Input name="url" type="text" defaultValue={url} readOnly />
+        </FieldBox>
+        <FieldBox>
+          <Label>Start time</Label>
+          <Input name="startTime" type="number" defaultValue={`${startTime}`} onChange={e => setStartTime(parseFloat(e.target.value))} />
+        </FieldBox>
+        <FieldBox>
+          <Label>End time</Label>
+          <Input name="stopTime" type="number" defaultValue={`${stopTime}`} onChange={e => setStopTime(parseFloat(e.target.value))} />
         </FieldBox>
         <VideoPreviewContainer>
           <Label>Preview</Label>
