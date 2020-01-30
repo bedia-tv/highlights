@@ -1,45 +1,28 @@
 stages:
-  - install
   - test
   - build  
 
-install:frontend:
-  image: node:10
-  stage: install
-  before_script:
-    - cd frontend/
-  script:
-    - npm install
-  cache:
-    key: frontend-${CI_COMMIT_REF_SLUG}
-    paths:
-      - frontend/node_modules/
-
 build:frontend:
+  image: node:10
   stage: build
   before_script:
     - cd frontend/
+    - npm install
   script:
     - CI=false npm run build
   artifacts:
     paths:
       - frontend/dist
     expire_in: 60 mins
-  cache:
-    key: frontend-${CI_COMMIT_REF_SLUG}
-  dependencies:
-    - install:frontend
 
 test:frontend:
+  image: node:10
   stage: test
   before_script:
     - cd frontend/
+    - npm install
   script:
-  - npm run affected:test
-  cache:
-    key: frontend-${CI_COMMIT_REF_SLUG}
-  dependencies:
-    - install:frontend
+    - npm run affected:test
 
 build:documents:
   stage: build
