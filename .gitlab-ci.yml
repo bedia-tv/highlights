@@ -27,8 +27,9 @@ build:frontend:
     paths:
       - frontend/dist
     expire_in: 60 mins
-  dependencies:
-    - install
+  needs: 
+    - job: install:frontend
+      artifacts: true
 
 test:frontend:
   image: node:10
