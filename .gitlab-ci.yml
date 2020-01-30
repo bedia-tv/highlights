@@ -3,11 +3,6 @@ stages:
   - test
   - build  
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - frontend/node_modules/
-
 install:frontend:
   image: node:10
   stage: install
@@ -15,13 +10,10 @@ install:frontend:
     - cd frontend/
   script:
     - npm install
-  # artifacts:
-  #   name: "install:frontend"
-  #   untracked: true
-  #   expire_in: 60 mins
-  #   paths: 
-  #   - frontend/.npm/
-  #   - frontend/node_modules/
+  cache:
+    key: frontend-${CI_COMMIT_REF_SLUG}
+    paths:
+      - frontend/node_modules/
 
 build:frontend:
   image: node:10
@@ -32,9 +24,10 @@ build:frontend:
     paths:
       - frontend/dist
     expire_in: 60 mins
+  cache:
+    key: frontend-${CI_COMMIT_REF_SLUG}
   needs: 
     - job: install:frontend
-      artifacts: true
 
 test:frontend:
   image: node:10
@@ -43,6 +36,8 @@ test:frontend:
     - cd frontend/
   script:
   - npm run affected:test
+  cache:
+    key: frontend-${CI_COMMIT_REF_SLUG}
   needs: 
     - job: install:frontend
 
