@@ -22,7 +22,9 @@ test:frontend:
     - cd frontend/
     - npm install
   script:
-    - npm run affected:test
+    - npm run test components
+    - npm run test pwa-extension
+    - npm run test chrome-extension
 
 build:documents:
   stage: build
