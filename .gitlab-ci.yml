@@ -16,8 +16,9 @@ install:frontend:
       - frontend/node_modules/
 
 build:frontend:
-  image: node:10
   stage: build
+  before_script:
+    - cd frontend/
   script:
     - CI=false npm run build
   artifacts:
@@ -26,11 +27,10 @@ build:frontend:
     expire_in: 60 mins
   cache:
     key: frontend-${CI_COMMIT_REF_SLUG}
-  needs: 
-    - job: install:frontend
+  dependencies:
+    - install:frontend
 
 test:frontend:
-  image: node:10
   stage: test
   before_script:
     - cd frontend/
@@ -38,8 +38,8 @@ test:frontend:
   - npm run affected:test
   cache:
     key: frontend-${CI_COMMIT_REF_SLUG}
-  needs: 
-    - job: install:frontend
+  dependencies:
+    - install:frontend
 
 build:documents:
   stage: build
