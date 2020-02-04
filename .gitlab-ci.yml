@@ -1,5 +1,34 @@
-image: blang/latex
-build:
+stages:
+  - test
+  - build  
+
+build:frontend:
+  image: node:10
+  stage: build
+  before_script:
+    - cd frontend/
+    - npm install
+  script:
+    - CI=false npm run build
+  artifacts:
+    paths:
+      - frontend/dist
+    expire_in: 60 mins
+
+test:frontend:
+  image: node:10
+  stage: test
+  before_script:
+    - cd frontend/
+    - npm install
+  script:
+    - npm run test components
+    - npm run test pwa-extension
+    - npm run test chrome-extension
+
+build:documents:
+  stage: build
+  image: blang/latex
   script:
     - latexmk -pdf -cd doc/main.tex
   artifacts:

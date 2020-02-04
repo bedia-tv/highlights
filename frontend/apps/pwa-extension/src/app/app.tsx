@@ -1,7 +1,4 @@
 import React from 'react';
-
-import styled from 'styled-components';
-
 import { Route, Link, Switch } from 'react-router-dom';
 import { Container } from './app.style';
 import SubmissionPage from './features/submission/submission.page';
