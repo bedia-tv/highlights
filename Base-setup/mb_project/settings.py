@@ -87,11 +87,11 @@ if os.getenv("DOCKER") or os.getenv("STAGING"):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'myproject',
-            'USER': 'myprojectuser',
-            'PASSWORD': 'password',
-            'HOST': os.getenv('DB_HOST'),  # set in docker-compose.yml
-            'PORT': os.getenv('DB_PORT')  # default postgres port
+            'NAME': os.getenv('DB_NAME','myproject'),
+            'USER': os.getenv('DB_USER', 'myprojectuser'),
+            'PASSWORD': os.getenv('DB_PASSWORD', 'password'),
+            'HOST': os.getenv('DB_HOST', 'localhost'),  # set in docker-compose.yml
+            'PORT': os.getenv('DB_PORT', 5432)  # default postgres port
         }
     }
 else:
