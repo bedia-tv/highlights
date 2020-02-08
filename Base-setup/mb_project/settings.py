@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'highlights.apps.PostsConfig',
     'graphene_django',
     'taggit',
-
 ]
 
 GRAPHENE = {
@@ -84,7 +83,7 @@ WSGI_APPLICATION = 'mb_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if os.getenv("DOCKER"):
+if os.getenv("DOCKER") or os.getenv("STAGING"):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
