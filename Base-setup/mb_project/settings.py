@@ -97,7 +97,7 @@ if os.getenv("DOCKER") or os.getenv("STAGING"):
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.sqlite3',
             'NAME': 'myproject',
             'USER': 'myprojectuser',
             'PASSWORD': 'password',
