@@ -22,7 +22,7 @@ export const TagList = (props: Props) => {
   let regex = /(["'])(?:(?=(\\?))\2.)*?\1/g;
 
   if(tags.match(regex) === null) return null;
-
+  
   return (
     <TagContainer>
       {
