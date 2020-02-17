@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: highlight-backend-config
+data:
+  DB_USER: highlight-user
+  DB_NAME: highlight
+  DB_HOST: highlight-db-postgresql.default.svc.cluster.local
+  DB_PORT: '5432'

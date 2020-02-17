@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'highlights.apps.PostsConfig',
     'graphene_django',
     'taggit',
-
 ]
 
 GRAPHENE = {
@@ -84,21 +83,21 @@ WSGI_APPLICATION = 'mb_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if os.getenv("DOCKER"):
+if os.getenv("DOCKER") or os.getenv("STAGING"):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'myproject',
-            'USER': 'myprojectuser',
-            'PASSWORD': 'password',
-            'HOST': os.getenv('DB_HOST'),  # set in docker-compose.yml
-            'PORT': os.getenv('DB_PORT')  # default postgres port
+            'NAME': os.getenv('DB_NAME','myproject'),
+            'USER': os.getenv('DB_USER', 'myprojectuser'),
+            'PASSWORD': os.getenv('DB_PASSWORD', 'password'),
+            'HOST': os.getenv('DB_HOST', 'localhost'),  # set in docker-compose.yml
+            'PORT': os.getenv('DB_PORT', 5432)  # default postgres port
         }
     }
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.sqlite3',
             'NAME': 'myproject',
             'USER': 'myprojectuser',
             'PASSWORD': 'password',

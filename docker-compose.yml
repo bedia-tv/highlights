@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile
       context: ./Base-setup
     environment: 
-      - DOCKER=1
+      - STAGING=1
       - DB_PORT=5432
       - DB_HOST=db
     volumes:
@@ -35,21 +35,21 @@ services:
       hilight:
         aliases:
           - backend
-  pwa-extension:
-    build:
-      dockerfile: pwa-extension.Dockerfile
-      context: ./frontend
-    ports:
-      - "8080:8080"
-    expose:
-      - 8080
-    depends_on:
-      - backend
-    links:
-      - backend
-    networks:
-      hilight:
-        aliases:
-          - pwa-extension
+  # pwa-extension:
+  #   build:
+  #     dockerfile: pwa-extension.Dockerfile
+  #     context: ./frontend
+  #   ports:
+  #     - "8080:8080"
+  #   expose:
+  #     - 8080
+  #   depends_on:
+  #     - backend
+  #   links:
+  #     - backend
+  #   networks:
+  #     hilight:
+  #       aliases:
+  #         - pwa-extension
 networks:
   hilight: {}
