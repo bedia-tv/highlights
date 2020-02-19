@@ -23,6 +23,8 @@ test:backend:
   before_script:
     - cd Base-setup
     - pipenv install --system
+    - python manage.py makemigrations
+    - python manage.py migrate
   script:
     - python manage.py test -v 2
 
