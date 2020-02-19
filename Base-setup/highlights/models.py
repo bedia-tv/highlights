@@ -66,7 +66,7 @@ class Video(models.Model):
         default=today_utc, blank=True, null=True)
     #video_speakers = models.ManyToManyField(
         #Speaker, null=True, blank=True, default="b781ef92-670c-4e74-b584-49fec58e9989")
-    comments = models.TextField()
+    comments = models.TextField(default='')
     exists = models.BooleanField(default=False)
     class Meta:
         ordering = ['-video_date']
@@ -80,6 +80,7 @@ class Highlights(models.Model):
     id = models.CharField(max_length=1000, primary_key=True,
                           unique=True, default=hex_uuid)
     highlight_name = models.CharField(max_length=128)
+    video_title = models.CharField(max_length=400,blank=False)
     tags = TaggableManager(blank=True)
     highlight_script = models.CharField(max_length=1000)
     comments = models.TextField()
