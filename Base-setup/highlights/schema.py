@@ -90,6 +90,7 @@ class VideoInput(graphene.InputObjectType):
 class HighlightInput(graphene.InputObjectType):
     url = graphene.String()
     tags = graphene.String()
+    video_title = graphene.String()
     comments = graphene.String()
     startTime = graphene.String()
     endTime = graphene.String()
@@ -150,17 +151,21 @@ class CreateHighlight(graphene.Mutation):
     def mutate(root, info, input=None):
         url = input.url
         ok = True
+        video_title = input.video_title
         tags = input.tags
         comments = input.comments
         startTime = input.startTime
         endTime = input.endTime
         highlight_name = input.highlight_name
         entry = Video.objects.filter(url=url)
-
-        if len(entry) == 1:
+        if len(entry) > 0:
             videoID = entry[0]
         else:
-            #TODO: create a video instance here
+            video_instance = Video(
+                url=url,
+                title=video_title,
+                )
+            video_instance.save()
             return False
         highlight_instance = Highlights(
             tags=tags,
@@ -168,6 +173,7 @@ class CreateHighlight(graphene.Mutation):
             startTime=startTime,
             endTime=endTime,
             highlight_name = highlight_name,
+            video_title = video_title,
             videoID = videoID
         )
         highlight_instance.save()
@@ -195,6 +201,7 @@ class UpdateHighlight(graphene.Mutation):
             highlight_instance.startTime = input.startTime
             highlight_instance.endTime = input.endTime
             highlight_instance.videoID = input.videoID
+            highlight_instance.video_title = input.video_title
             highlight_instance.save()
             return UpdateHighlight(ok=ok, highlights=highlight_instance)
         return UpdateHighlight(ok=ok, highlight=None)
