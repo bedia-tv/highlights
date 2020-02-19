@@ -31,8 +31,8 @@ build:frontend-artifacts:
   before_script:
     - cd frontend/
   script:
-    - npm run build
     - npm install
+    - npm run build
   artifacts:
     paths:
       - frontend/dist
