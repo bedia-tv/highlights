@@ -32,6 +32,7 @@ build:frontend-artifacts:
     - cd frontend/
   script:
     - npm run build
+    - npm install
   artifacts:
     paths:
       - frontend/dist
