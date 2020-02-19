@@ -1,22 +1,14 @@
+image: python3.8-nodejs13
 stages:
   - test
   - build  
 
-build:frontend:
-  image: node:10
-  stage: build
-  before_script:
-    - cd frontend/
-    - npm install
-  script:
-    - CI=false npm run build
-  artifacts:
-    paths:
-      - frontend/dist
-    expire_in: 60 mins
+cache:
+  key: node-deps-${CI_COMMIT_REF_SLUG}
+  paths:
+  - frontend/node_modules/
 
 test:frontend:
-  image: node:10
   stage: test
   before_script:
     - cd frontend/
@@ -26,11 +18,31 @@ test:frontend:
     - npm run test pwa-extension
     - npm run test chrome-extension
 
-build:documents:
-  stage: build
-  image: blang/latex
+test:backend:
+  stage: test
+  before_script:
+    - cd Base-setup
+    - pipenv shell
+    - pipenv install
   script:
-    - latexmk -pdf -cd doc/main.tex
+    - python manage.py test -v 2
+
+build:frontend-artifacts:
+  stage: build
+  before_script:
+    - cd frontend/
+  script:
+    - npm run build
   artifacts:
     paths:
-      - "*.pdf"
+      - frontend/dist
+    expire_in: 60 mins
+
+# build:documents:
+#   stage: build
+#   image: blang/latex
+#   script:
+#     - latexmk -pdf -cd doc/main.tex
+#   artifacts:
+#     paths:
+#       - "*.pdf"
