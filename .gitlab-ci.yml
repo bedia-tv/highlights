@@ -22,8 +22,7 @@ test:backend:
   stage: test
   before_script:
     - cd Base-setup
-    - pipenv shell
-    - pipenv install
+    - pipenv install --system
   script:
     - python manage.py test -v 2
 
