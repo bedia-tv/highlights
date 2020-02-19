@@ -36,7 +36,6 @@ class Query(ObjectType):
     def resolve_video(self, info, **kwargs):
         url = kwargs.get("url")
         entry = Video.objects.filter(url=url)
-        print((entry))
 
         if len(entry) < 1:
             raw_data = Extractor(url)

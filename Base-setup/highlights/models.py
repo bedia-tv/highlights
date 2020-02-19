@@ -80,14 +80,15 @@ class Highlights(models.Model):
     id = models.CharField(max_length=1000, primary_key=True,
                           unique=True, default=hex_uuid)
     highlight_name = models.CharField(max_length=128)
-    video_title = models.CharField(max_length=400,blank=False)
+    video_title = models.CharField(max_length=400,blank=True)
     tags = TaggableManager(blank=True)
     highlight_script = models.CharField(max_length=1000)
     comments = models.TextField()
     startTime = models.FloatField(default=0.0)
     endTime = models.FloatField(default=0.0)
     videoID = models.ForeignKey(
-        Video, related_name='Highlight_Video', blank=True, null=True, on_delete=models.SET_NULL)
+        Video, related_name='Highlight_Video', blank=True, null=True, on_delete=models.SET_NULL
+    )
     #highlight_speakers = models.ManyToManyField(
         #Speaker, null=True, blank=True, default="b781ef92-670c-4e74-b584-49fec58e9989")
 
