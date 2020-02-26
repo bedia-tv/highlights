@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["node", "jest", "chrome"],
+    "lib": ["dom", "es2016", "esnext"]
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}

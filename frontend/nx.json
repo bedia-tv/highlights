@@ -1,0 +1,30 @@
+{
+  "npmScope": "frontend",
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "chrome-extension": {
+      "tags": []
+    },
+    "chrome-extension-e2e": {
+      "tags": []
+    },
+    "components": {
+      "tags": []
+    },
+    "mock-server": {
+      "tags": []
+    },
+    "pwa-extension": {
+      "tags": []
+    },
+    "pwa-extension-e2e": {
+      "tags": []
+    }
+  }
+}
