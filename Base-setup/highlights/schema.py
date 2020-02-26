@@ -165,7 +165,7 @@ class CreateHighlight(graphene.Mutation):
                 title=video_title,
                 )
             video_instance.save()
-            return False
+            videoID = Video.objects.filter(url=url)[0]
         highlight_instance = Highlights(
             tags=tags,
             comments=comments,
