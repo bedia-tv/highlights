@@ -3,13 +3,9 @@ import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { from } from 'apollo-link';
 
-// const host = process.env.HOST || 'http://localhost';
-// const port = process.env.PORT || '8000';
+const API = "https://api.highlight-project.dev";
 
-const host = 'http://localhost';
-const port = '8000';
-
-const uri = `${host}:${port}/graphql`;
+const uri = `${API}/graphql`;
 
 console.log(`Listening Graph QL at ${uri}`);
 

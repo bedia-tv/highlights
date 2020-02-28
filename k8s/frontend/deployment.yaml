@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: highlight-frontend
+spec:
+  selector:
+    matchLabels:
+      app: highlight-frontend
+  template:
+    metadata:
+      labels:
+        app: highlight-frontend
+    spec:
+      containers:
+      - name: highlight-frontned
+        image: arutji/highlight-frontend:latest
+        ports:
+        - name: http
+          containerPort: 8080
+        env:
+        - name: API_ENDPOINT
+          value: "https://api.highlight-project.dev"
