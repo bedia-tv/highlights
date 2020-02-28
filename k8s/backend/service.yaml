@@ -8,8 +8,12 @@ metadata:
       apiVersion: ambassador/v1
       kind: Mapping
       name: backend-serivce_mapping
+      host: api.highlight-project.dev
       prefix: /
       service: highlight-backend:80
+      cors:
+        origins: *
+        credentials: true
 spec:
   selector:
     app: highlight-backend
