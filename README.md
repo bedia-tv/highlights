@@ -16,11 +16,13 @@ The application can be run via the following command:
 $ npm run start <application-name>
 ```
 Substitute "application-name" with your targeted application e.g. the pwa-extension or the chrome-extension.
+
 The application uses port 4200 and requires it to be free.
 If there are any changes, it can be observed in the terminal console.
 
 ### Backend
 The backend application is placed in a directory named 'Base-setup'.
+
 For ease of development the backend application is configured to use sqlite3 as a database, for when is not running in the staging nor the production environment.
 
 To run the the backend service, you should firstly have `pipenv` installed in your local machine; it is used as a python environment manager. 
