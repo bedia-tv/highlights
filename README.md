@@ -14,7 +14,7 @@ The application can be run via the following command:
 ```bash
 $ npm run start <application-name>
 ```
-Substitutes <application-name> with your targeted application e.g. the pwa-extension or the chrome-extension.
+Substitute <application-name> with your targeted application e.g. the pwa-extension or the chrome-extension.
 The application uses port 4200 and requires it to be free.
 If there are any changes, it can be observed in the terminal console.
 
