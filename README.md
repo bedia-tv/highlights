@@ -4,7 +4,8 @@
 
 ### Frontend 
 The frontend section consists of two main applications: the chrome extension and the PWA.
-Initially the project dependencies are required, which can be installed using the below commands. 
+
+Initially the project dependencies are required, which can be installed via the following commands:
 ```bash
 $ cd frontend/
 $ npm install
