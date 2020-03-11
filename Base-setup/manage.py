@@ -6,6 +6,14 @@ import sys
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mb_project.settings')
+
+    running_tests = (sys.argv[1] == 'test')
+    if running_tests:
+        from coverage import Coverage
+        cov = Coverage()
+        cov.erase()
+        cov.start()
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -16,6 +24,13 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
+    if running_tests:
+        cov.stop()
+        cov.save()
+        covered = cov.report()
+        sys.exit(1)
+        # if covered < 100:
+        #     sys.exit(1)
 
 if __name__ == '__main__':
     main()
