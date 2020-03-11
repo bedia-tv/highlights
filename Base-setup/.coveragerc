@@ -9,7 +9,6 @@ omit =
     templates/*
     mb_project/wsgi.py
 
-[omit]
 
 [report]
 fail_under = 70
