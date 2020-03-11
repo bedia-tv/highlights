@@ -12,13 +12,19 @@ from taggit.managers import TaggableManager
 
 # convert TaggableManager to string representation
 @convert_django_field.register(TaggableManager)
-def convert_field_to_string(field, registry=None):
+def convert_field_to_String(field, registry=None):
     return String(description=field.help_text, required=not field.null)
 
 
 class VideoType(DjangoObjectType):
     class Meta:
         model = Video
+        exclude = ('tags',)
+
+    tags = graphene.List(graphene.String)
+
+    def resolve_tags(self, parent):
+        return self.tags
 
 
 class HighlightType(DjangoObjectType):
@@ -26,10 +32,10 @@ class HighlightType(DjangoObjectType):
         model = Highlights
 
 
-# Create a Query type
+# Query interface for all objects
 class Query(ObjectType):
     video = graphene.Field(VideoType, url=graphene.String())
-    highlight = graphene.Field(HighlightType, highlight_id=graphene.Int())
+    highlight = graphene.Field(HighlightType, id=graphene.Int())
     videos = graphene.List(VideoType)
     highlights = graphene.List(HighlightType)
 
@@ -43,23 +49,9 @@ class Query(ObjectType):
             URL = kwargs.get('url')
             tags = raw_data['Tags']
             thumbnail = raw_data['Thumbnail']
-            
 
-            p = Video(
+            return Video(
                 title=title, url=URL, tags=tags, thumbnail=thumbnail)
-
-            # video_instance = Video(
-            #     url=url,
-            #     title=title,
-            #     exists=True,
-            #     thumbnail=thumbnail,
-            #     tags = tags
-            #     )
-
-            # video_instance.save()
-            
-            return p
-            
 
         return entry[0]
 
@@ -88,7 +80,7 @@ class VideoInput(graphene.InputObjectType):
 
 class HighlightInput(graphene.InputObjectType):
     url = graphene.String()
-    tags = graphene.String()
+    tags = graphene.List(graphene.String)
     video_title = graphene.String()
     comments = graphene.String()
     startTime = graphene.String()
@@ -115,6 +107,7 @@ class CreateVideo(graphene.Mutation):
         video_instance.save()
         return CreateVideo(ok=ok, video=video_instance)
 
+
 '''
 class UpdateVideo(graphene.Mutation):
     class Arguments:
@@ -139,6 +132,8 @@ class UpdateVideo(graphene.Mutation):
 
 '''
 # Create mutations for movies
+
+
 class CreateHighlight(graphene.Mutation):
     class Arguments:
         input = HighlightInput(required=True)
@@ -163,7 +158,7 @@ class CreateHighlight(graphene.Mutation):
             video_instance = Video(
                 url=url,
                 title=video_title,
-                )
+            )
             video_instance.save()
             videoID = Video.objects.filter(url=url)[0]
         highlight_instance = Highlights(
@@ -171,9 +166,9 @@ class CreateHighlight(graphene.Mutation):
             comments=comments,
             startTime=startTime,
             endTime=endTime,
-            highlight_name = highlight_name,
-            video_title = video_title,
-            videoID = videoID
+            highlight_name=highlight_name,
+            video_title=video_title,
+            videoID=videoID
         )
         highlight_instance.save()
         return CreateHighlight(ok=ok, highlight=highlight_instance)
@@ -216,4 +211,4 @@ class Mutation(graphene.ObjectType):
 schema = graphene.Schema(query=Query, mutation=Mutation)
 
 
-#check url, start time and end time
+# check url, start time and end time

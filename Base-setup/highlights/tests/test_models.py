@@ -4,17 +4,19 @@ from highlights.models import Video
 from highlights.models import Highlights
 import datetime
 
+
 class HighlightsModelTest(TestCase):
     def setUp(self):
         super(HighlightsModelTest, self).setUp()
-        video = Video.objects.create(title='title', url='www.test.com', video_description = "description",comments = "comments")
+        video = Video.objects.create(
+            title='title', url='www.test.com', video_description="description", comments="comments")
 
         self.highlight_id = Highlights.objects.create(
             highlight_name='highlight_name',
-            highlight_script = 'highlight_script',
-            comments = 'comments',  
-            startTime = 0.0, 
-            endTime = 1.0, 
+            highlight_script='highlight_script',
+            comments='comments',
+            startTime=0.0,
+            endTime=1.0,
             videoID=video
         )
 
@@ -43,17 +45,28 @@ class HighlightsModelTest(TestCase):
         video = highlight.videoID
         self.assertEquals(video.id, 1)
 
+
 class VideoModelTest(TestCase):
     def setUp(self):
         super(VideoModelTest, self).setUp()
-        video = Video.objects.create(title='title', url='www.test.com', video_description = "description",comments = "comments")
+        video = Video.objects.create(
+            title='title',
+            url='www.test.com',
+            video_description="description",
+            comments="comments",
+            tags=["1", "2", "3"]
+        )
 
-    def testVideoUrlLabel(self):
+    def testVideoUrl(self):
         video = Video.objects.get(id=1)
         field_label = video.url
         self.assertEquals(field_label, 'www.test.com')
 
-    def testVideoDescriptionLabel(self):
+    def testVideoDescription(self):
         video = Video.objects.get(id=1)
         field_label = video.video_description
         self.assertEquals(field_label, 'description')
+    
+    # def testVideoTags(self):
+    #     video = Video.objects.get(id=1)
+    #     self.assertEquals(video.get_tags, ['1', '2', '3'])

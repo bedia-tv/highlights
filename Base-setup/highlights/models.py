@@ -68,6 +68,11 @@ class Video(models.Model):
         #Speaker, null=True, blank=True, default="b781ef92-670c-4e74-b584-49fec58e9989")
     comments = models.TextField(default='')
     exists = models.BooleanField(default=False)
+
+    @property
+    def get_tags(self):
+        return [o.name for o in self.tags.all()]
+
     class Meta:
         ordering = ['-video_date']
 
