@@ -24,7 +24,9 @@ test:backend:
     - cd Base-setup
     - pipenv install --system
   script:
-    - python manage.py test -v 2
+    - coverage erase
+    - coverage run manage.py test
+    - coverage report
 
 build:frontend-artifacts:
   stage: build

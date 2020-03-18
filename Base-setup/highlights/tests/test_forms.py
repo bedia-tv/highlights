@@ -1,186 +1,134 @@
 from django.test import TestCase
 from graphene.test import Client
 from graphene import Schema
-from highlights.schema import Query, Mutation
+from highlights.schema import schema
 from django.test.utils import override_settings
+from highlights.models import Video, Highlights
+
+create_video_payload = {
+    "title": "「残酷な天使のテーゼ」MUSIC VIDEO（HDver.）/Zankoku na Tenshi no Te-ze“The Cruel Angel's Thesis”",
+    "url": "https://www.youtube.com/watch?v=o6wtDPVkKqI",
+    "tags": [
+        "エヴァンゲリオン",
+        "エヴァ",
+        "EVA",
+        "高橋洋子",
+        "アニソン",
+        "キングレコード",
+        "残酷な天使のテーゼ",
+        "魂のルフラン"
+    ],
+    "thumbnail": "https://i.ytimg.com/vi/o6wtDPVkKqI/maxresdefault.jpg"
+}
 
 
 class VideosTest(TestCase):
     def setUp(self):
-        querySchema = Schema(query=Query)
-        self.queryClient = Client(schema=querySchema)
-        mutationSchema = Schema(mutation=Mutation)
-        self.mutationClient = Client(schema=mutationSchema)
+        self.client = Client(schema=schema)
 
     def testCreateVideo(self):
-        executed = self.mutationClient.execute('''
-        mutation {
-            createVideo(input:{
-                url: "www.example.com"
-                title: "title"
-            }){
-                ok
-                video{
-                    url
-                    title
-                }
-            }  
-        }
-        ''')
-        assert executed == {
-            "data": {
-                "createVideo": {
-                    "ok": True,
-                    "video": {
-                        "url": "www.example.com",
-                        "title": "title",
+        executed = self.client.execute(
+            '''
+            mutation createVideo($videoInput: VideoInput!) {
+                createVideo(input: $videoInput) {
+                    video {
+                        id
+                        title
+                        url
                     }
                 }
             }
-        }
+            ''',
+            variables={
+                'videoInput': create_video_payload
+            }
+        )
+        video_id = executed['data']['createVideo']['video']['id']
+        self.assertIsNotNone(Video.objects.get(id=video_id))
 
-    def testGetVideo(self):
-        mutation = self.mutationClient.execute('''
-        mutation {
-            createVideo(input:{
-                url: "www.example.com"
-                title: "title"
-            }){
-                ok
-            }  
-        }
-        ''')
-        if mutation["data"]["createVideo"]["ok"]:
-            executed = self.queryClient.execute('''
+    def testGetVideos(self):
+        Video.objects.create(**create_video_payload)
+        executed = self.client.execute(
+            '''
             query {
-                video(url:"www.example.com"){
-                    url                        
+                videos {
+                    id
                     title
-                    thumbnail
-                    videoDescription
-                    comments
+                    url
                 }
             }
-            ''')
-            assert executed == {
-                "data": {
-                    "video": {
-                        "url": "www.example.com",
-                        "title": "title",
-                        "thumbnail": "",
-                        "videoDescription": "",
-                        "comments": ""
-                    }
-                }
-            }
+            '''
+        )
+        self.assertIsNotNone(Video.objects.all())
 
-        else:
-            raise Exception("Mutation of createVideo failed!")
+
+create_highlight_payload = {
+    "url": "https://www.youtube.com/watch?v=o6wtDPVkKqI",
+    "tags": [
+        "エヴァンゲリオン",
+        "エヴァ",
+        "EVA",
+        "高橋洋子",
+        "アニソン",
+        "キングレコード",
+        "残酷な天使のテーゼ",
+        "魂のルフラン"
+    ],
+    "videoTitle": "「残酷な天使のテーゼ」MUSIC VIDEO（HDver.）/Zankoku na Tenshi no Te-ze“The Cruel Angel's Thesis”",
+    "highlightName": "Evagelion Opening",
+    "comments": "This is so cool.",
+    "startTime": 0.04,
+    "endTime": 1.03
+}
+
+highlight_model_payload = {
+    "video_title": "「残酷な天使のテーゼ」MUSIC VIDEO（HDver.）/Zankoku na Tenshi no Te-ze“The Cruel Angel's Thesis”",
+    "highlight_name": "Evagelion Opening",
+    "comments": "This is so cool.",
+    "startTime": 0.04,
+    "endTime": 1.03
+}
 
 
 class HighlightsTest(TestCase):
     def setUp(self):
-        querySchema = Schema(query=Query)
-        self.queryClient = Client(schema=querySchema)
-        mutationSchema = Schema(mutation=Mutation)
-        self.mutationClient = Client(schema=mutationSchema)
+        self.client = Client(schema=schema)
+
+    def testGetHighlights(self):
+
+        Highlights.objects.create(
+            **highlight_model_payload, videoID=Video.objects.create(**create_video_payload))
+        exeucted = self.client.execute(
+            '''
+            query  {
+                highlights {
+                    id
+                }
+            }
+            '''
+        )
+        self.assertIsNotNone(Highlights.objects.all())
 
     def testCreateHighlight(self):
-        mutation = self.mutationClient.execute('''
-        mutation {
-            createVideo(input:{
-                url: "www.example.com"
-                title: "title"
-            }){
-                ok
-            }  
-        }
-        ''')
-        if mutation["data"]["createVideo"]["ok"]:
-            executed = self.mutationClient.execute('''
-            mutation {
-                createHighlight(input:{
-                    highlightName: "highlightName"
-                    videoTitle: "video_title"
-                    comments: "comments"
-                    url: "www.example.com"
-              	    startTime: "12.30"
-              	    endTime: "14.53"             	
-                }){
+        executed = self.client.execute(
+            '''
+            mutation createHighlight($highlightInput: HighlightInput!) {
+                createHighlight(input: $highlightInput) {
                     ok
-                    highlight{
+                    highlight {
+                        id
+                        videoTitle
                         highlightName
-                  	    startTime
-                  	    endTime
-                  	    comments
-                    }
-                }  
-            }
-            ''')
-            assert executed == {
-                "data": {
-                    "createHighlight": {
-                        "ok": True,
-                        "highlight": {
-                            "highlightName": "highlightName",
-                            "startTime": 12.3,
-                            "endTime": 14.53,
-                            "comments": "comments"
-                        }
+                        comments
+                        startTime
+                        endTime
                     }
                 }
             }
-        else:
-            raise Exception("Mutation of createVideo failed!")
-
-    def testGetHighlight(self):
-        mutation = self.mutationClient.execute('''
-        mutation {
-            createVideo(input:{
-                url: "www.example.com"
-                title: "title"
-            }){
-                ok
-            }  
-        }
-        ''')
-        if mutation["data"]["createVideo"]["ok"]:
-            executed = self.mutationClient.execute('''
-            mutation {
-                createHighlight(input:{
-                    highlightName: "highlightName"
-                    videoTitle: "video_title"
-                    comments: "comments"
-                    url: "www.example.com"
-              	    startTime: "12.30"
-              	    endTime: "14.53"             	
-                }){
-                    ok
-                    highlight{
-                        highlightName
-                  	    startTime
-                  	    endTime
-                  	    comments
-                    }
-                }  
+            ''',
+            variables={
+                'highlightInput': create_highlight_payload
             }
-            ''')
-            if executed["data"]["createHighlight"]["ok"]:
-                assert executed == {
-                    "data": {
-                        "createHighlight": {
-                            "ok": True,
-                            "highlight": {
-                                "highlightName": "highlightName",
-                                "startTime": 12.3,
-                                "endTime": 14.53,
-                                "comments": "comments"
-                            }
-                        }
-                    }
-                }
-
-            else:
-                raise Exception("Mutation of createHighlight failed!")
-        else:
-            raise Exception("Mutation of createVideo failed!")
+        )
+        highlight_id = executed['data']['createHighlight']['highlight']['id']
+        self.assertIsNotNone(Highlights.objects.get(id=highlight_id))
