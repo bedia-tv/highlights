@@ -3,11 +3,6 @@ stages:
   - test
   - build  
 
-cache:
-  key: node-deps-${CI_COMMIT_REF_SLUG}
-  paths:
-  - frontend/node_modules/
-
 test:frontend:
   stage: test
   before_script:
@@ -24,7 +19,13 @@ test:backend:
     - cd Base-setup
     - pipenv install --system
   script:
-    - python manage.py test -v 2
+    - coverage erase
+    - coverage run manage.py test
+    - coverage report
+  artifacts: 
+    paths:
+      - Base-setup/htmlcov
+    expire_in: 60 mins
 
 build:frontend-artifacts:
   stage: build
@@ -37,12 +38,3 @@ build:frontend-artifacts:
     paths:
       - frontend/dist
     expire_in: 60 mins
-
-# build:documents:
-#   stage: build
-#   image: blang/latex
-#   script:
-#     - latexmk -pdf -cd doc/main.tex
-#   artifacts:
-#     paths:
-#       - "*.pdf"

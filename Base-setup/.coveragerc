@@ -1,0 +1,16 @@
+[run]
+source = .
+plugins = 
+    django_coverage_plugin
+
+omit = 
+    manage.py
+    htmlcov/*
+    templates/*
+    mb_project/wsgi.py
+
+
+[report]
+fail_under = 70
+show_missing = True
+

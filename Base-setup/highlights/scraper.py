@@ -10,7 +10,7 @@ def Extractor(url):
         'outtmpl': '%(id)s%(ext)s',
         'nocheckcertificate': True
     })
-    video = {'URL': '', 'Title': '', 'Thumbnail':'','Tags':[]}
+    video = {'URL': '', 'Title': '', 'Thumbnail': '', 'Tags': []}
     with ydl:
         result = ydl.extract_info(
             url,
