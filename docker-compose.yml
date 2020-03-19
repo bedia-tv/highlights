@@ -3,14 +3,15 @@ version: '3'
 services: 
   db:
     image: postgres
+    restart: always
     volumes:
       - ./Base-setup/db:/var/lib/postgresql/data/
     ports:
-      - "5431:5432"
+      - "5432:5432"
     environment: 
-      - POSTGRES_USER=myprojectuser
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=myproject
+      - POSTGRES_USER=highlight-user
+      - POSTGRES_PASSWORD=highlight
+      - POSTGRES_DB=highlight
     networks:
       hilight:
         aliases:
@@ -20,9 +21,13 @@ services:
       dockerfile: Dockerfile
       context: ./Base-setup
     environment: 
-      - STAGING=1
-      - DB_PORT=5432
+      - DOCKER=1
+      - DB_NAME=highlight
+      - DB_USER=highlight-user
+      - DB_PASSWORD=highlight
       - DB_HOST=db
+      - DB_PORT=5432
+    command: ['/bin/sh', './docker-entrypoint.sh']
     volumes:
       - ./Base-setup:/code
     ports:
@@ -35,21 +40,21 @@ services:
       hilight:
         aliases:
           - backend
-  # pwa-extension:
-  #   build:
-  #     dockerfile: pwa-extension.Dockerfile
-  #     context: ./frontend
-  #   ports:
-  #     - "8080:8080"
-  #   expose:
-  #     - 8080
-  #   depends_on:
-  #     - backend
-  #   links:
-  #     - backend
-  #   networks:
-  #     hilight:
-  #       aliases:
-  #         - pwa-extension
+  pwa-extension:
+    build:
+      dockerfile: pwa-extension.Dockerfile
+      context: ./frontend
+    ports:
+      - "8080:8080"
+    expose:
+      - 8080
+    depends_on:
+      - backend
+    links:
+      - backend
+    networks:
+      hilight:
+        aliases:
+          - pwa-extension
 networks:
   hilight: {}
