@@ -2,18 +2,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: highlight-backend
-  annotations:
-    getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v1
-      kind: Mapping
-      name: backend-serivce_mapping
-      host: api.highlight-project.dev
-      prefix: /
-      service: highlight-backend:80
-      cors:
-        origins: *
-        credentials: true
 spec:
   selector:
     app: highlight-backend
@@ -21,3 +9,15 @@ spec:
   - name: http
     port: 80
     targetPort: 8000
+---
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: backend-serivce-mapping
+spec:
+  host: api.highlight-project.dev
+  prefix: /
+  service: highlight-backend:80
+  cors:
+    origins: "*"
+    credentials: true
