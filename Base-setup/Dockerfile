@@ -18,5 +18,6 @@ RUN pipenv install --system
 # Copy project
 COPY . /code/
 
+CMD [ "chmod", "+x", "docker-entrypoint.sh" ]
 #Running the service
-CMD  ./docker-entrypoint.sh
+ENTRYPOINT ["/bin/sh", "docker-entrypoint.sh"]
