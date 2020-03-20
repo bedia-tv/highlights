@@ -122,4 +122,4 @@ spec:
 This code fragment defines how the cluster load balancer should route the incoming traffic. When there is an incoming request from hostname "pwa.highlight-project.dev" with prefix "/",  it will be routed to the frontend service , which in this case, highlight-frontend at port 80. The hostname is the DNS that point to the load balancer of the cluster. 
 
 ### Known-backend Issues
-Some functionally of the backend does not properly work due to some unknown issues that is beyond the capability of the team. For example, the issue which is cause by third-party libraries.
+Some functionally of the backend does not properly work due to some unknown issues that is beyond the capability of the team. For example there is a persisting issue with storing tags due to third party libraries
