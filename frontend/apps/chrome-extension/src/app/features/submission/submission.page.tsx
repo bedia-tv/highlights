@@ -1,26 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from './submission.page.style';
 import { useActiveTabLocation } from '../../hooks';
-import { Form, submissionMachine } from '@frontend/components';
+import { Form} from '@frontend/components';
 import { useMachine } from '@xstate/react';
-import { submissionService } from '@frontend/components';
 import { SubmissionResult } from './submission-result.fragment';
 
-const REQUEST_VIDEO_INFORMATION = 'request-video-information';
-const FETCHED_VIDEO_INFORMATION = 'fetched-video-information';
-const EXTENSION_OPENED = 'extension-opened';
+const tagList = [
+  "エヴァンゲリオン",
+  "エヴァ",
+  "EVA",
+  "高橋洋子",
+  "アニソン",
+  "キングレコード",
+  "残酷な天使のテーゼ",
+  "魂のルフラン"
+];
+const thumbnail = "https://i.ytimg.com/vi/o6wtDPVkKqI/maxresdefault.jpg";
+
+const url = "https://www.youtube.com/watch?v=o6wtDPVkKqI";
+
+const data = {
+  title:
+    "「残酷な天使のテーゼ」MUSIC VIDEO（HDver.）/Zankoku na Tenshi no Te-ze“The Cruel Angel's Thesis”",
+  url,
+  thumbnail,
+  tagList,
+};
 
 export const SubmissionPage = () => {
   const location = useActiveTabLocation();
-  // const [current, _] = useMachine(submissionMachine);
-  const URL = location || 'https://www.youtube.com/watch?v=o6wtDPVkKqI';
 
-  // if (current.value === 'idle') {
   return (
     <Container>
-      <h1>Video Submission</h1>
-      <Form url={URL} />
+      <Form defaultValue={data} submit={(payload) => console.log(payload)}/>
     </Container>
   );
-  // }
 };

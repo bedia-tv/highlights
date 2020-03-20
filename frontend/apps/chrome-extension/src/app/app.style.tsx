@@ -1,18 +1,12 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: fit-content;
-  background-color: #282c34;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #09d3ac;
+  font-family: "Montserrat";
+  display: inline-flex;
   width: 100vw;
-  padding: 1rem 2rem;
   min-height: 100vh;
-  box-sizing: border-box;
-  min-width: 400px;
+  justify-content: center;
+  background-color: #e5e5e5;
 `;
 
 export const Title = styled.div`
