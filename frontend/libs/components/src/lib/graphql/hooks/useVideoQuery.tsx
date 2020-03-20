@@ -13,7 +13,7 @@ type VideoQueryResult = {
 export const useVideoQuery = (url: string): VideoQueryResult => {
   const {loading, data, error} = useQuery(FETCH_IF_VIDEO_EXIST_QUERY, {
     variables: {url}
-  })
+  });
 
   return {loading, data, error};
 };

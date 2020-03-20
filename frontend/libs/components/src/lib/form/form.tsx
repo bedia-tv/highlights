@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
-import {ButtonSection, Container, Title} from './form.style';
+import React, { useState } from 'react';
+import { ButtonSection, Container, Title } from './form.style';
 import useForm from 'react-hook-form';
-import {TextInput} from '../text-input/text-input';
-import {Thumbnail} from '../thumnail/thumbnail';
-import {TagList} from '../tags/tags';
-import {Button} from '../button/button';
-import {Video, Highlight} from '../types';
-// import {useHighlightMutation} from '../graphql';
-import {Preview} from '../preview';
+import { TextInput } from '../text-input/text-input';
+import { Thumbnail } from '../thumnail/thumbnail';
+import { TagList } from '../tags/tags';
+import { Button } from '../button/button';
+import { Video, Highlight } from '../types';
+import { Preview } from '../preview';
+import { useHighlightMutation } from '../graphql';
+import { useFormState } from '../reducer';
+import { Error, Success } from '../dialog';
+import { Loading } from '../loading';
 
 type Props = {
   defaultValue?: Video;
@@ -55,10 +58,8 @@ export const Form: React.FC<Props> = props => {
     });
   };
 
-  // const { submitHighlight, error, data } = useHighlightMutation();
-
-//   if (error) console.error(error);
-//   if (data) console.log(data);
+  const { submitHighlight, error, data } = useHighlightMutation();
+  const [_, dispatch] = useFormState();
 
   const onSubmit = () => {
     const highlight: Highlight = {
@@ -70,10 +71,14 @@ export const Form: React.FC<Props> = props => {
       comments: '',
       highlightName: localState.title
     };
-    console.log(highlight);
-    //  TODO: does submission work?
-    // submitHighlight(highlight);
+    submitHighlight(highlight);
   };
+
+  if (data) {
+    return (
+      <Success onDismiss={() => dispatch({ type: 'RESET' })}/>
+    );
+  }
 
   return (
     <Container onSubmit={handleSubmit(onSubmit)}>
@@ -82,13 +87,13 @@ export const Form: React.FC<Props> = props => {
         name="title"
         label={'Video Title'}
         defaultValue={title}
-        ref={register({required: true})}
+        ref={register({ required: true })}
       />
       <TextInput
         name="url"
         label={'URL'}
         defaultValue={url}
-        ref={register({required: true})}
+        ref={register({ required: true })}
       />
       <Thumbnail url={thumbnail}/>
       <Preview url={url} onUpdate={onUpdate}/>
@@ -103,4 +108,8 @@ export const Form: React.FC<Props> = props => {
       </ButtonSection>
     </Container>
   );
+};
+
+export {
+  Form, Container
 };

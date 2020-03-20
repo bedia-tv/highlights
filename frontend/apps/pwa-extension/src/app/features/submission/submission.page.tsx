@@ -1,12 +1,15 @@
 import React from 'react';
 import { Container } from '../../app.style';
 import { userQueryParams } from '../../hooks/use-query-params';
-import { Form } from '@frontend/components';
+import {
+  Form,
+  useVideoQuery,
+  useFormState, Loading, Error
+} from '@frontend/components';
 
 export default function SubmissionPage() {
 
-
-	/** 
+  /** 
   *  The SubmissionPage fetches url and title of the video
   * and passes that information to the shared (between the extension and PWA) 
   * Form Component in the directory libs/components/src/lib/form
@@ -14,14 +17,30 @@ export default function SubmissionPage() {
   * @return Form - the shared form component
   */
 
-	const query = userQueryParams();
-	const title: string = query.get('title');
-	const text: string = query.get('text');
+  const query = userQueryParams();
+  const url: string = query.get('text');
+  const { loading, data, error } = useVideoQuery(url);
+  const [_, dispatch] = useFormState();
 
-	return (
-		<Container>
-			<h1>Video Submission</h1>
-			<Form url={text} title={title} />
-		</Container>
-	);
+  if (loading) {
+    return (
+      <Container>
+        <Loading/>
+      </Container>
+    );
+  }
+
+  if (error) {
+    dispatch({type: 'ERROR', message: error.message});
+  }
+
+  if(data) {
+    return (
+      <Container>
+        <Form defaultValue={data.video}/>
+      </Container>
+    );
+  }
+
+  return null;
 }
