@@ -5,13 +5,14 @@ type Props = {
   children: React.ReactNode;
   primary?: boolean;
   danger?: boolean;
-  type: 'submit' | 'reset';
+  type: 'submit' | 'reset' | 'button';
+  onClick?: () => void;
 };
 
 export const Button: React.FC<Props> = props => {
-  const {children, primary, danger, type} = props;
+  const {children, primary, danger, type, onClick} = props;
   return (
-    <Container primary={!!primary} danger={!!danger} type={type}>
+    <Container primary={!!primary} danger={!!danger} type={type} onClick={onClick}>
       {children}
     </Container>
   );

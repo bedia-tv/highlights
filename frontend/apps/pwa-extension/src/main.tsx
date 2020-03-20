@@ -4,11 +4,13 @@ import './assets/index.css';
 import { BrowserRouter } from 'react-router-dom';
 import App from './app/app';
 import { ApolloProvider } from '@apollo/react-common';
-import { client } from '@frontend/components';
+import { client, FormContextProvider } from '@frontend/components';
 
 const AppWithApolloProvider = () => (
   <ApolloProvider client={client}>
-    <App/>
+    <FormContextProvider>
+      <App/>
+    </FormContextProvider>
   </ApolloProvider>
 );
 
