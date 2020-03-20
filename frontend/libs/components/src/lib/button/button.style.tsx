@@ -11,8 +11,9 @@ export const Container = styled.button<Props>`
   color: black;
   text-transform: uppercase;
   border-radius: 5px;
-  font-weight: bold;
-
+  font-weight: 600;
+  font-size: 1rem;
+  
   ${(props: Props) =>
   props.primary &&
   css`

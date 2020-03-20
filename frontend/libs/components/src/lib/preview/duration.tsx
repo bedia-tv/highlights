@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components';
 import {utils} from '../utils';
 
 type TimeProps = {
-  fontSize: number;
+  fontSize?: number;
 }
 
 const Time = styled.time<TimeProps>`
@@ -15,7 +15,7 @@ const Time = styled.time<TimeProps>`
   font-weight: bold;
 `;
 
-type DurationProps = TimeSize & {
+type DurationProps = TimeProps & {
   seconds: number;
 }
 

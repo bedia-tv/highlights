@@ -6,7 +6,6 @@ import { Handle } from "./handle";
 import { Track } from "./track";
 
 const Container = styled.div`
-  height: 150px;
   width: 100%;
 `;
 

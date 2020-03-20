@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { ButtonSection, Container, Title } from './form.style';
+import React, {useState} from 'react';
+import {ButtonSection, Container, Title} from './form.style';
 import useForm from 'react-hook-form';
-import { TextInput } from '../text-input/text-input';
-import { Thumbnail } from '../thumnail/thumbnail';
-import { TagList } from '../tags/tags';
-import { Button } from '../button/button';
-import { Video, Highlight } from '../types';
-import { useHighlightMutation } from '../graphql/hooks/useHighlightMutation';
+import {TextInput} from '../text-input/text-input';
+import {Thumbnail} from '../thumnail/thumbnail';
+import {TagList} from '../tags/tags';
+import {Button} from '../button/button';
+import {Video, Highlight} from '../types';
+import {useHighlightMutation} from '../graphql';
+import {Preview} from '../preview';
 
 type Props = {
   defaultValue?: Video;
@@ -45,7 +46,7 @@ export const Form: React.FC<Props> = props => {
 //   if (error) console.error(error);
 //   if (data) console.log(data);
 
-  const onSubmit = payload => {
+  const onSubmit = () => {
     const highlight: Highlight = {
       url: localState.url,
       videoTitle: localState.title,
@@ -66,16 +67,17 @@ export const Form: React.FC<Props> = props => {
         name="title"
         label={'Video Title'}
         defaultValue={title}
-        ref={register({ required: true })}
+        ref={register({required: true})}
       />
       <TextInput
         name="url"
         label={'URL'}
         defaultValue={url}
-        ref={register({ required: true })}
+        ref={register({required: true})}
       />
-      <Thumbnail url={thumbnail} />
-      <TagList onUpdate={onUpdate} tagList={tagList} />
+      <Thumbnail url={thumbnail}/>
+      <Preview url={url} onUpdate={onUpdate}/>
+      <TagList onUpdate={onUpdate} tagList={tagList}/>
       <ButtonSection>
         <Button primary type="submit">
           submit

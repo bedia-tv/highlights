@@ -6,6 +6,7 @@ export const Container = styled.div`
 
 export const Label = styled.label`
   font-size: 16px;
+  font-weight: 500;
 `;
 
 export const ImageBox = styled.img`
