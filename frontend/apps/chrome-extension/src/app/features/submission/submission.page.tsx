@@ -12,16 +12,15 @@ const EXTENSION_OPENED = 'extension-opened';
 
 export const SubmissionPage = () => {
   const location = useActiveTabLocation();
-  const [current, _] = useMachine(submissionMachine);
-  const URL = location || 'https://www.youtube.com/watch?v=WnYLrhjzNhQ';
-  console.log(current.value)
+  // const [current, _] = useMachine(submissionMachine);
+  const URL = location || 'https://www.youtube.com/watch?v=o6wtDPVkKqI';
 
-  if (current.value === 'idle') {
-    return (
-      <Container>
-        <h1>Video Submission</h1>
-        <Form url={URL} />
-      </Container>
-    );
-  }
+  // if (current.value === 'idle') {
+  return (
+    <Container>
+      <h1>Video Submission</h1>
+      <Form url={URL} />
+    </Container>
+  );
+  // }
 };
