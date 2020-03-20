@@ -1,142 +1,100 @@
 import React, { useState } from 'react';
-import {
-  FormContainer,
-  Input,
-  Label,
-  FieldBox,
-  VideoPreviewBox,
-  Button,
-  ButtonContainer,
-  ThumbnailsBox,
-  ImageBox,
-  VideoPreviewContainer
-} from './form.style';
-import {TagList} from './tags.component';
-import PreviewPlayer from './preview-player/preview-player.component';
-
+import { ButtonSection, Container, Title } from './form.style';
 import useForm from 'react-hook-form';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import {
-  FETCH_IF_VIDEO_EXIST_QUERY,
-  SUBMIT_VIDEO_MUTATION
-} from '../graphql/video';
+import { TextInput } from '../text-input/text-input';
+import { Thumbnail } from '../thumnail/thumbnail';
+import { TagList } from '../tags/tags';
+import { Button } from '../button/button';
+import { Video, Highlight } from '../types';
+import { Preview } from '../preview';
+import { useHighlightMutation } from '../graphql';
+import { useFormState } from '../reducer';
+import { Success } from '../dialog';
 
-interface Props {
-  url: string;
-  title?: string;
-}
+type Props = {
+  defaultValue?: Video;
+};
 
-interface VideoInformationData {
-  url: string;
-  title: string;
-  tags: string;
-  thumbnail: string;
-  startTime: number;
-  stopTime: number;
-}
+type State = Video & {
+  interval: {
+    startTime: number;
+    endTime: number;
+  };
+};
 
-export const Form: React.FC<Props> = ({ url, title = null }) => {
-  console.log(url);
-  const { register, handleSubmit } = useForm<VideoInformationData>();
-  const [titleValue, setTitleValue] = useState(title || '');
-  const [startTime, setStartTime] = useState(0);
-  const [stopTime, setStopTime] = useState(0);
+const Form: React.FC<Props> = props => {
+  const {
+    defaultValue: { title, url, thumbnail, tagList }
+  } = props;
 
-  const [
-    submitVideo,
-    { data: submissionResult, error: submissionError, loading: submissionLoading }
-  ] = useMutation(SUBMIT_VIDEO_MUTATION);
-  
-  const { loading, data: videoQueryResult, error } = useQuery(FETCH_IF_VIDEO_EXIST_QUERY, {
-    variables: {
-      url: url
+  const [localState, setLocalState] = useState<State>({
+    ...props.defaultValue,
+    interval: {
+      startTime: 0,
+      endTime: 0
     }
   });
 
-  const onSubmit = async (values: VideoInformationData) => {
-    const result = await submitVideo({
-      variables: {
-        input: {
-          url: values.url,
-          tags: values.tags,
-          highlightName: values.title,
-          startTime: values.startTime,
-          stopTime: values.stopTime
-        }
-      }
+  const { register, handleSubmit } = useForm();
+  const onUpdate = (updatePayload: Partial<State>) => {
+    setLocalState({
+      ...localState,
+      ...updatePayload
     });
-    console.log(result);
   };
 
-  if (loading || submissionLoading) return <p>loading...</p>;
-  if (error || submissionError) return <p>Error...</p>;
+  const { submitHighlight, error, data } = useHighlightMutation();
+  const [_, dispatch] = useFormState();
 
-  if (submissionResult) {
-    return (
-      <FormContainer>
-        <h1>
-          Submission Succeeded. 
-        </h1>  
-      </FormContainer>
-    );
-  } else if (videoQueryResult) {
+  const onSubmit = () => {
+    const highlight: Highlight = {
+      url: localState.url,
+      videoTitle: localState.title,
+      tags: localState.tagList,
+      startTime: localState.interval.startTime,
+      endTime: localState.interval.endTime,
+      comments: '',
+      highlightName: localState.title
+    };
+    submitHighlight(highlight);
+  };
 
-    const {video: {thumbnail, tags}} = videoQueryResult;
-    
+  if (data) {
     return (
-      <FormContainer >
-        <form onSubmit={handleSubmit(onSubmit)}>
-        <FieldBox>
-          <Label>Title</Label>
-          <Input
-            defaultValue={titleValue}
-            name="title"
-            type="text"
-            onChange={e => setTitleValue(e.target.value)}
-          />
-        </FieldBox>
-        <FieldBox>
-          <Label>Thumbnail</Label>
-          <ThumbnailsBox>
-            <ImageBox>
-              <img src={thumbnail} alt="thumnails" />
-            </ImageBox>
-          </ThumbnailsBox>
-        </FieldBox>
-        <FieldBox>
-          <Label>Url</Label>
-          <Input name="url" type="text" defaultValue={url} readOnly />
-        </FieldBox>
-        <FieldBox>
-          <Label>Start time</Label>
-          <Input name="startTime" type="number" defaultValue={`${startTime}`} onChange={e => setStartTime(parseFloat(e.target.value))} />
-        </FieldBox>
-        <FieldBox>
-          <Label>End time</Label>
-          <Input name="stopTime" type="number" defaultValue={`${stopTime}`} onChange={e => setStopTime(parseFloat(e.target.value))} />
-        </FieldBox>
-        <VideoPreviewContainer>
-          <Label>Preview</Label>
-          <PreviewPlayer
-            url={url}
-            controls={true}
-            width="100%"
-            height="100%"
-            startTime={60}
-            endTime={65}
-          />
-        </VideoPreviewContainer>
-        <FieldBox>
-          <Label>Tags</Label>
-          <TagList tags={tags}/>
-          {/* <Input name="tags" value={tags} type="text" readOnly /> */}
-        </FieldBox>
-        <ButtonContainer>
-          <Button primary>Submit</Button>
-          <Button>Cancel</Button>
-        </ButtonContainer>
-        </form>
-      </FormContainer>
+      <Success onDismiss={() => dispatch({ type: 'RESET' })}/>
     );
   }
+
+  return (
+    <Container onSubmit={handleSubmit(onSubmit)}>
+      <Title>Video Submission</Title>
+      <TextInput
+        name="title"
+        label={'Video Title'}
+        defaultValue={title}
+        ref={register({ required: true })}
+      />
+      <TextInput
+        name="url"
+        label={'URL'}
+        defaultValue={url}
+        ref={register({ required: true })}
+      />
+      <Thumbnail url={thumbnail}/>
+      <Preview url={url} onUpdate={onUpdate}/>
+      <TagList onUpdate={onUpdate} tagList={tagList}/>
+      <ButtonSection>
+        <Button primary type="submit">
+          submit
+        </Button>
+        <Button danger type="reset">
+          reset
+        </Button>
+      </ButtonSection>
+    </Container>
+  );
+};
+
+export {
+  Form, Container
 };

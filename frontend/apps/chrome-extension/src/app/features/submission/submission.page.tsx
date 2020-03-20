@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Container } from './submission.page.style';
 import { useActiveTabLocation } from '../../hooks';
-import { Form, submissionMachine } from '@frontend/components';
-import { useMachine } from '@xstate/react';
-import { submissionService } from '@frontend/components';
-import { SubmissionResult } from './submission-result.fragment';
-
-const REQUEST_VIDEO_INFORMATION = 'request-video-information';
-const FETCHED_VIDEO_INFORMATION = 'fetched-video-information';
-const EXTENSION_OPENED = 'extension-opened';
+import { Form, Loading, useFormState } from '@frontend/components';
+import { useVideoQuery } from '@frontend/components';
 
 export const SubmissionPage = () => {
   const location = useActiveTabLocation();
-  const [current, _] = useMachine(submissionMachine);
-  const URL = location || 'https://www.youtube.com/watch?v=WnYLrhjzNhQ';
-  console.log(current.value)
+  const { data, error } = useVideoQuery(location);
+  const [_, dispatch] = useFormState();
 
-  if (current.value === 'idle') {
+  if (!!error) dispatch({type: 'ERROR', message:  error.message});
+
+  if (data) {
     return (
       <Container>
-        <h1>Video Submission</h1>
-        <Form url={URL} />
+        <Form
+          defaultValue={data.video}
+        />
       </Container>
     );
   }
+
+  return (
+    <Container>
+      <Loading/>
+    </Container>
+  );
 };

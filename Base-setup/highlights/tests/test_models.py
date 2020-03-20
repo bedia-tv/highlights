@@ -2,60 +2,79 @@ from django.test import TestCase
 
 from highlights.models import Video
 from highlights.models import Highlights
+import datetime
 
-class VideoHighlightsModelTest(TestCase):
+video_payload = {
+    "title": "「残酷な天使のテーゼ」MUSIC VIDEO（HDver.）/Zankoku na Tenshi no Te-ze“The Cruel Angel's Thesis”",
+    "url": "https://www.youtube.com/watch?v=o6wtDPVkKqI",
+    "tags": [
+        "エヴァンゲリオン",
+        "エヴァ",
+        "EVA",
+        "高橋洋子",
+        "アニソン",
+        "キングレコード",
+        "残酷な天使のテーゼ",
+        "魂のルフラン"
+    ],
+    "thumbnail": "https://i.ytimg.com/vi/o6wtDPVkKqI/maxresdefault.jpg"
+}
+
+class VideoModelTest(TestCase):
     def setUp(self):
-        # Set up non-modified objects used by all test methods
-        super(VideoHighlightsModelTest, self).setUp()
-        video = Video.objects.create(title='title', url='www.test.com', video_description = "description",comments = "comments")
-        self.highlight_id = Highlights.objects.create(highlight_name='highlight_name',highlight_script = 'highlight_script',comments = 'comments',  startTime = 0.0, endTime = 1.0, videoID=video).id
+        super(VideoModelTest, self).setUp()
+        video = Video(**video_payload) 
+        video.save()
 
-    def test_video_title_label(self):
+    def testVideoConstruction(self):
         video = Video.objects.get(id=1)
-        field_label = Video._meta.get_field('title').verbose_name
-        self.assertEquals(field_label, 'title')
+        self.assertEquals(video.url, video_payload['url'])
+        self.assertEquals(video.title, video_payload['title'])
+        self.assertEquals(video.thumbnail, video_payload['thumbnail'])
+        
+    
+    def testVideoTags(self):
+        video = Video.objects.get(url=video_payload['url'])
+        video.tags.add(*video_payload['tags'])
+        self.assertEqual(sorted(video.get_tags), sorted(video_payload['tags']))
 
-    def test_video_url_label(self):
-        video = Video.objects.get(id=1)
-        field_label = video.url
-        self.assertEquals(field_label, 'www.test.com')
 
-    def test_video_description_label(self):
-        video = Video.objects.get(id=1)
-        field_label = video.video_description
-        self.assertEquals(field_label, 'description')
+highlight_payload = {
+    "video_title": "「残酷な天使のテーゼ」MUSIC VIDEO（HDver.）/Zankoku na Tenshi no Te-ze“The Cruel Angel's Thesis”",    	
+    "highlight_name": "Evagelion Opening",
+    "comments": "This is so cool.",
+    "startTime": 0.04,
+    "endTime": 1.03
+}
 
-    def test_video_comments_label(self):
-        video = Video.objects.get(id=1)
-        field_label = Video._meta.get_field('comments').verbose_name
-        self.assertEquals(field_label, 'comments')
+class HighlightsModelTest(TestCase):
+    def setUp(self):
+        super(HighlightsModelTest, self).setUp()
+        video = Video.objects.create(**video_payload)
+        self.highlight_id = Highlights.objects.create(**highlight_payload, videoID=video)
 
-    def test_video_title_max_length(self):
-        video = Video.objects.get(id=1)
-        max_length = Video._meta.get_field('title').max_length
-        self.assertEquals(max_length, 400)
-
-    def test_highlight_name_label(self):
+    def testHighlightNameLabel(self):
         highlight = Highlights.objects.get(id=self.highlight_id)
         field_label = highlight.highlight_name
-        self.assertEquals(field_label, 'highlight_name')
+        self.assertEquals(field_label, highlight_payload['highlight_name'])
 
-    def test_highlight_comments_label(self):
+    def testHighlightCommentsLabel(self):
         highlight = Highlights.objects.get(id=self.highlight_id)
         field_label = highlight.comments
-        self.assertEquals(field_label, 'comments')
+        self.assertEquals(field_label, highlight_payload['comments'])
 
-    def test_highlight_startTime_value(self):
+    def testHighlightStartTimeValue(self):
         highlight = Highlights.objects.get(id=self.highlight_id)
         field_value = highlight.startTime
-        self.assertEquals(field_value, 0.0)
+        self.assertEquals(field_value, highlight_payload['startTime'])
 
-    def test_highlight_endTime_value(self):
+    def testHighlightEndTimeValue(self):
         highlight = Highlights.objects.get(id=self.highlight_id)
         field_value = highlight.endTime
-        self.assertEquals(field_value, 1.0)
+        self.assertEquals(field_value, highlight_payload['endTime'])
 
-    def test_highlight_video_ID(self):
+    def testHighlightVideoID(self):
         highlight = Highlights.objects.get(id=self.highlight_id)
         video = highlight.videoID
-        self.assertEquals(video.id, 1)
+        self.assertIsNotNone(video)
+

@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './assets/index.css'
+import './assets/index.css';
 import App from './app/app';
-import {client } from '@frontend/components';
-import {ApolloProvider} from '@apollo/react-hooks';
+import { client, FormContextProvider } from '@frontend/components';
+import { ApolloProvider } from '@apollo/react-hooks';
 
 const AppWithApolloProvider = () => (
   <ApolloProvider client={client}>
-    <App/>
+    <FormContextProvider>
+      <App/>
+    </FormContextProvider>
   </ApolloProvider>
 );
 

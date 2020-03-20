@@ -5,7 +5,8 @@ export const FETCH_IF_VIDEO_EXIST_QUERY = gql`
 		video(url: $url) {
 			title
 			thumbnail
-			tags
+			tagList
+			url
 		}
 	}
 `;

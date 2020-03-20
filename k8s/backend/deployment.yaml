@@ -13,8 +13,33 @@ spec:
     spec:
       containers:
       - name: highlight-backend
-        image: arutji/highlight-backend
+        image: arutji/highlight-backend:latest
         ports:
         - name: http
           containerPort: 8000
-
+        env:
+          - name: DB_NAME
+            valueFrom: 
+              configMapKeyRef:
+                name: highlight-backend-config
+                key: DB_NAME
+          - name: DB_USER
+            valueFrom: 
+              configMapKeyRef:
+                name: highlight-backend-config
+                key: DB_USER
+          - name: DB_HOST
+            valueFrom: 
+              configMapKeyRef:
+                name: highlight-backend-config
+                key: DB_HOST
+          - name: DB_PORT
+            valueFrom: 
+              configMapKeyRef:
+                name: highlight-backend-config
+                key: DB_PORT
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: highlight-db-secret
+                key:  postgresql-password

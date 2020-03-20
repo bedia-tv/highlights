@@ -18,8 +18,6 @@ RUN pipenv install --system
 # Copy project
 COPY . /code/
 
-#Migrating models
-RUN python /code/manage.py makemigrations
-RUN python /code/manage.py migrate
+CMD [ "chmod", "+x", "docker-entrypoint.sh" ]
 #Running the service
-CMD python /code/manage.py runserver 0.0.0.0:8000
+ENTRYPOINT ["/bin/sh", "docker-entrypoint.sh"]
