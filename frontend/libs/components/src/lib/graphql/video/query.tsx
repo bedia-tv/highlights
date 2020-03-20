@@ -6,6 +6,7 @@ export const FETCH_IF_VIDEO_EXIST_QUERY = gql`
 			title
 			thumbnail
 			tagList
+			url
 		}
 	}
 `;

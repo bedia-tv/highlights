@@ -3,7 +3,7 @@ import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { from } from 'apollo-link';
 
-const API = "http://localhost:8000";
+const API = "http://localhost:5000";
 
 const uri = `${API}/graphql`;
 
