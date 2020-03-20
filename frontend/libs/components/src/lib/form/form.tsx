@@ -22,7 +22,7 @@ type State = Video & {
   };
 };
 
-export const Form: React.FC<Props> = props => {
+const Form: React.FC<Props> = props => {
 
   /**
    * The shared form component used by both the Chrome extension and the PWA
