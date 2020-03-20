@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+/**
+ * Global styles for the PWA
+ */
+
 export const Container = styled.div`
   font-family: "Montserrat",sans-serif;
   display: inline-flex;
