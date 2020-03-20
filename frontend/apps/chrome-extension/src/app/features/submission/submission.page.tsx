@@ -6,16 +6,8 @@ import { useVideoQuery } from '@frontend/components';
 
 export const SubmissionPage = () => {
   const location = useActiveTabLocation();
-  const { loading, data, error } = useVideoQuery(location);
-  const [_ ,dispatch] = useFormState();
-
-  if (!!loading) {
-    return (
-      <Container>
-        <Loading/>
-      </Container>
-    );
-  }
+  const { data, error } = useVideoQuery(location);
+  const [_, dispatch] = useFormState();
 
   if (!!error) dispatch({type: 'ERROR', message:  error.message});
 
@@ -28,4 +20,10 @@ export const SubmissionPage = () => {
       </Container>
     );
   }
+
+  return (
+    <Container>
+      <Loading/>
+    </Container>
+  );
 };

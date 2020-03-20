@@ -3,8 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.div`
   font-family: "Montserrat",sans-serif;
   display: inline-flex;
-  width: 100vw;
   min-height: 100vh;
+  width: fit-content;
+  min-width: 25rem;
   justify-content: center;
   background-color: #e5e5e5;
   button,
