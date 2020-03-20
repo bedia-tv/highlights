@@ -9,8 +9,7 @@ import { Video, Highlight } from '../types';
 import { Preview } from '../preview';
 import { useHighlightMutation } from '../graphql';
 import { useFormState } from '../reducer';
-import { Error, Success } from '../dialog';
-import { Loading } from '../loading';
+import { Success } from '../dialog';
 
 type Props = {
   defaultValue?: Video;
