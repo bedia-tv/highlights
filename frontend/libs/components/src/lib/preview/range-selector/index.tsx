@@ -17,7 +17,7 @@ const sliderStyle = {
 
 const RangeSelector = props => {
   const { handleUpdate, handleChange } = props;
-  const domain = [0, 100];
+  const domain: number[] = [0, 100];
 
   const handleSliderUpdate = newUpdate => {
     handleUpdate({
@@ -71,6 +71,7 @@ const RangeSelector = props => {
                   source={source}
                   target={target}
                   getTrackProps={getTrackProps}
+                  disabled={false}
                 />
               ))}
             </div>

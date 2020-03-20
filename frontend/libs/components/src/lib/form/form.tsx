@@ -53,7 +53,7 @@ export const Form: React.FC<Props> = (props) => {
 
     const onSubmit = (payload) => {
 
-        submit(payload)
+        submit(payload);
     };
 
     return (
@@ -82,5 +82,5 @@ export const Form: React.FC<Props> = (props) => {
                 </Button>
             </ButtonSection>
         </Container>
-    )
+    );
 };
