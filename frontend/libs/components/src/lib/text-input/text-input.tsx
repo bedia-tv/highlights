@@ -7,7 +7,7 @@ type Props = {
   label: string;
 }
 
-export const TextInput = React.forwardRef((props: Props, ref) => {
+export const TextInput = React.forwardRef((props: Props, ref: any) => {
   const { label, name, defaultValue } = props;
   return (
     <Container>

@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import {Container, Title} from "./form.style";
+import {ButtonSection, Container, Title} from "./form.style";
 import useForm from "react-hook-form";
 import {TextInput} from "../text-input/text-input";
 import {Thumbnail} from "../thumnail/thumbnail";
+import {TagList} from "../tags/tags";
+import {Button} from "../button/button";
 
 type Video = {
     title: string;
@@ -70,6 +72,15 @@ export const Form: React.FC<Props> = (props) => {
                 ref={register({ required: true })}
             />
             <Thumbnail url={thumbnail} />
+            <TagList onUpdate={onUpdate} tagList={tagList}/>
+            <ButtonSection>
+                <Button primary type="submit">
+                    submit
+                </Button>
+                <Button danger type="reset">
+                    reset
+                </Button>
+            </ButtonSection>
         </Container>
     )
 };
