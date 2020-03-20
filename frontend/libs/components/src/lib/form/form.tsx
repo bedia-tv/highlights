@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {Container, Title} from "./form.style";
 import useForm from "react-hook-form";
+import {TextInput} from "../text-input/text-input";
+import {Thumbnail} from "../thumnail/thumbnail";
 
 type Video = {
     title: string;
@@ -50,11 +52,24 @@ export const Form: React.FC<Props> = (props) => {
     const onSubmit = (payload) => {
 
         submit(payload)
-    }
+    };
 
     return (
-        <Container>
+        <Container onSubmit={handleSubmit(onSubmit)}>
             <Title>Video Submission</Title>
+            <TextInput
+                name="title"
+                label={"Video Title"}
+                defaultValue={title}
+                ref={register({ required: true })}
+            />
+            <TextInput
+                name="url"
+                label={"URL"}
+                defaultValue={url}
+                ref={register({ required: true })}
+            />
+            <Thumbnail url={thumbnail} />
         </Container>
     )
 };
