@@ -4,7 +4,7 @@ export const Container = styled.div``;
 
 export const TagStyle = css`
   background: #ffffff;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   padding: 0.2em 0.8em;
   font-size: 16px;
@@ -15,7 +15,7 @@ export const TagStyle = css`
 
 export const Tag = styled.span`
   background: #ffffff;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   padding: 0.2em 0.8em;
   font-size: 16px;
@@ -23,7 +23,7 @@ export const Tag = styled.span`
   margin-top: 0.4em;
 
   :hover {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   }
   cursor: pointer;
 `;

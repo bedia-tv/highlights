@@ -1,32 +1,11 @@
-import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import {MockedProvider} from '@apollo/react-testing';
+import { MockedProvider } from '@apollo/react-testing';
 import { render } from '@testing-library/react';
-import {Form} from './form';
-import {SUBMIT_VIDEO_MUTATION} from '../graphql/video';
-
-const tagList = [
-  "エヴァンゲリオン",
-  "エヴァ",
-  "EVA",
-  "高橋洋子",
-  "アニソン",
-  "キングレコード",
-  "残酷な天使のテーゼ",
-  "魂のルフラン"
-];
-const thumbnail = "https://i.ytimg.com/vi/o6wtDPVkKqI/maxresdefault.jpg";
-
-const url = "https://www.youtube.com/watch?v=o6wtDPVkKqI";
-
-const data = {
-  title:
-    "「残酷な天使のテーゼ」MUSIC VIDEO（HDver.）/Zankoku na Tenshi no Te-ze“The Cruel Angel's Thesis”",
-  url,
-  thumbnail,
-  tagList,
-};
-
+import { Form } from './form';
+import { videoQueryResult } from '../__mock__';
+import { SUBMIT_VIDEO_MUTATION } from '../graphql/video';
+import '@testing-library/jest-dom/extend-expect';
+import 'mutationobserver-shim';
 
 const mocks = [
   {
@@ -35,7 +14,7 @@ const mocks = [
     },
     result: {
       data: {
-        success: true,
+        ok: true
       }
     }
   }
@@ -46,7 +25,7 @@ describe('Form', () => {
   it('should render successfully', () => {
     const { baseElement } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <Form defaultValue={data} submit={(payload) => console.log(payload)}/>
+        <Form defaultValue={videoQueryResult.video}/>
       </MockedProvider>
     );
     expect(baseElement).toBeTruthy();

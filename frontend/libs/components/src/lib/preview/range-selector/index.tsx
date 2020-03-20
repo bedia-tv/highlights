@@ -1,18 +1,18 @@
-import React from "react";
-import styled from "styled-components";
-import { Slider, Rail, Handles, Tracks } from "react-compound-slider";
-import { SliderRail } from "./slider-rail";
-import { Handle } from "./handle";
-import { Track } from "./track";
+import React from 'react';
+import styled from 'styled-components';
+import { Slider, Rail, Handles, Tracks } from 'react-compound-slider';
+import { SliderRail } from './slider-rail';
+import { Handle } from './handle';
+import { Track } from './track';
 
 const Container = styled.div`
   width: 100%;
 `;
 
-const sliderStyle = {
-  position: "relative",
-  width: "100%"
-};
+const StyledSlider = styled(Slider)`
+  position: relative;
+  width: 100%;
+`;
 
 const RangeSelector = props => {
   const { handleUpdate, handleChange } = props;
@@ -34,18 +34,17 @@ const RangeSelector = props => {
 
   return (
     <Container>
-      <Slider
+      <StyledSlider
         mode={2}
         step={1}
         domain={domain}
-        rootStyle={sliderStyle}
         reversed={false}
         values={domain}
         onUpdate={handleSliderUpdate}
         onChange={handleSliderValuesChange}
       >
         <Rail>
-          {({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}
+          {({ getRailProps }) => <SliderRail getRailProps={getRailProps}/>}
         </Rail>
         <Handles>
           {({ handles, getHandleProps }) => (
@@ -54,8 +53,9 @@ const RangeSelector = props => {
                 <Handle
                   key={handle.id}
                   handle={handle}
-                  domain={domain}
+                  domain={[0, 100]}
                   getHandleProps={getHandleProps}
+                  disabled={false}
                 />
               ))}
             </div>
@@ -76,7 +76,7 @@ const RangeSelector = props => {
             </div>
           )}
         </Tracks>
-      </Slider>
+      </StyledSlider>
     </Container>
   );
 };

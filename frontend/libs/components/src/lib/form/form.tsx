@@ -6,7 +6,7 @@ import {Thumbnail} from '../thumnail/thumbnail';
 import {TagList} from '../tags/tags';
 import {Button} from '../button/button';
 import {Video, Highlight} from '../types';
-import {useHighlightMutation} from '../graphql';
+// import {useHighlightMutation} from '../graphql';
 import {Preview} from '../preview';
 
 type Props = {
@@ -34,14 +34,14 @@ export const Form: React.FC<Props> = props => {
   });
 
   const { register, handleSubmit } = useForm();
-  const onUpdate = (updatePayload: State) => {
+  const onUpdate = (updatePayload: Partial<State>) => {
     setLocalState({
       ...localState,
       ...updatePayload
     });
   };
 
-  const { submitHighlight, error, data } = useHighlightMutation();
+  // const { submitHighlight, error, data } = useHighlightMutation();
 
 //   if (error) console.error(error);
 //   if (data) console.log(data);
