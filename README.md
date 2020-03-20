@@ -71,7 +71,7 @@ In our kubernetes cluster, there are these main services:
 - A kubernetes cluster in any cloud provider (Ours is Google Cloud.)
 - [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) CLI pre-installed
 - [`helm`](https://helm.sh/docs/intro/install/) CLI pre-install
-- Set your `kubectl` context to your cluster.
+- Set your `kubectl` context to your cluster. [See example for GCP](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)
 - Install [Ambassador Edge Stack]([https://www.getambassador.io/user-guide/manual-install/](https://www.getambassador.io/user-guide/manual-install/)). We will be using this stack do traffic routing and service mapping.
 
 
