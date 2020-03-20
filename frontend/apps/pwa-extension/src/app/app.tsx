@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
 import { Container } from './app.style';
 import SubmissionPage from './features/submission/submission.page';
-import { useFormState, Loading, Error } from '@frontend/components';
+import { useFormState, Error } from '@frontend/components';
 
 const App = () => {
   const [{ error }, dispatch] = useFormState();

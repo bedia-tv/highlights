@@ -36,8 +36,9 @@ export const TagContainer = styled.div`
 `;
 
 export const AddTagButton = styled.button`
-  ${TagStyle};
+  margin-top: 3px;
   font-weight: bold;
+  ${TagStyle};
 `;
 
 export const TagInput = styled.input`

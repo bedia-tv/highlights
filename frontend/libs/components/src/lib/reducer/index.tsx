@@ -6,6 +6,7 @@ type Error = {
 }
 
 type State = {
+  success: boolean;
   loading: boolean;
   error: Error | null;
 }
@@ -18,13 +19,15 @@ type Action =
 
 const initialState: State = {
   loading: false,
-  error: null
+  error: null,
+  success: false
 };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'ERROR':
       return {
+        success: false,
         loading: false,
         error: {
           message: action.errorMessage
@@ -38,7 +41,8 @@ const reducer = (state: State, action: Action): State => {
     case 'SUCCESS':
       return {
         ...state,
-        loading: false
+        loading: false,
+        success: true
       };
     case 'RESET':
       return {

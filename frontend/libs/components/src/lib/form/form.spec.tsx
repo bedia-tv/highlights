@@ -6,6 +6,7 @@ import { videoQueryResult } from '../__mock__';
 import { SUBMIT_VIDEO_MUTATION } from '../graphql/video';
 import '@testing-library/jest-dom/extend-expect';
 import 'mutationobserver-shim';
+import { FormContextProvider } from '@frontend/components';
 
 const mocks = [
   {
@@ -25,7 +26,9 @@ describe('Form', () => {
   it('should render successfully', () => {
     const { baseElement } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <Form defaultValue={videoQueryResult.video}/>
+        <FormContextProvider>
+          <Form defaultValue={videoQueryResult.video}/>
+        </FormContextProvider>
       </MockedProvider>
     );
     expect(baseElement).toBeTruthy();

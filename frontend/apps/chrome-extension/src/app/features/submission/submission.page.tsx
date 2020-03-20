@@ -1,26 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Container } from './submission.page.style';
 import { useActiveTabLocation } from '../../hooks';
-import { Form } from '@frontend/components';
-import { useMutation } from '@apollo/react-hooks';
+import { Form, Loading, useFormState } from '@frontend/components';
 import { useVideoQuery } from '@frontend/components';
-import {Highlight} from '@frontend/components'
-import {videoQueryResult} from "@frontend/components";
 
 export const SubmissionPage = () => {
-  // const location = useActiveTabLocation();
+  const location = useActiveTabLocation();
+  const { loading, data, error } = useVideoQuery(location);
+  const [_ ,dispatch] = useFormState();
 
-  // const { loading, data, error } = useVideoQuery(location);
+  if (!!loading) {
+    return (
+      <Container>
+        <Loading/>
+      </Container>
+    );
+  }
 
-  // if (loading) {
-  //   return <div>loading ...</div>;
-  // }
+  if (!!error) dispatch({type: 'ERROR', message:  error.message});
 
-  return (
-    <Container>
-      <Form
-        defaultValue={videoQueryResult.video}
-      />
-    </Container>
-  );
+  if (data) {
+    return (
+      <Container>
+        <Form
+          defaultValue={data.video}
+        />
+      </Container>
+    );
+  }
 };
