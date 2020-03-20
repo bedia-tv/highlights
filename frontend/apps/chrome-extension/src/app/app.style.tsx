@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+/*
+
+Global styles for the chrome extension
+
+*/
+
 export const Container = styled.div`
   font-family: "Montserrat";
   display: inline-flex;

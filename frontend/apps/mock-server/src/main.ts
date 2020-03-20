@@ -1,6 +1,11 @@
 import * as express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 
+/**
+ * A MOCK SERVER FOR DEVELOPMENT PURPOSES
+ * can be used to test the frontend code with fake server and data
+ */
+
 const videos = [
 	{
 		url: 'abc',

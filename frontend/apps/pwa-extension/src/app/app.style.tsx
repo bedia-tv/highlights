@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+/**
+ * Global styles for the PWA
+ */
+
 export const Container = styled.div`
   height: fit-content;
   background-color: #282c34;
