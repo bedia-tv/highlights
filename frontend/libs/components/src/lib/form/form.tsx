@@ -23,6 +23,20 @@ type State = Video & {
 };
 
 const Form: React.FC<Props> = props => {
+
+  /**
+   * The shared form component used by both the Chrome extension and the PWA
+   * 
+   * Its state consists of the form values that are used to submit the Highlight information
+   * to the backend
+   * 
+   * This component also handles the submitting of the form
+   * 
+   * @props a video object consisting of title: string, url: string, thumbail: string, tagList: [string]
+   * @return Form - the form component 
+   */
+
+
   const {
     defaultValue: { title, url, thumbnail, tagList }
   } = props;
